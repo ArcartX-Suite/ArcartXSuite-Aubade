@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.logging.Logger;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import xuanmo.arcartxsuite.api.storage.StorageDescriptor;
 
@@ -28,6 +30,12 @@ public class CoreConfig {
   private String defaultGameMode = "skyblock";
   private int maxIslandsPerPlayer = 1;
   private boolean debug = false;
+  private String globalSpawnWorld = "";
+  private double globalSpawnX = 0.0;
+  private double globalSpawnY = 0.0;
+  private double globalSpawnZ = 0.0;
+  private float globalSpawnYaw = 0.0f;
+  private float globalSpawnPitch = 0.0f;
 
   public CoreConfig(File configFile, Logger logger) {
     this.configFile = configFile;
@@ -52,6 +60,12 @@ public class CoreConfig {
     this.defaultGameMode = yaml.getString("general.default-gamemode", "skyblock");
     this.maxIslandsPerPlayer = yaml.getInt("general.max-islands-per-player", 1);
     this.debug = yaml.getBoolean("general.debug", false);
+    this.globalSpawnWorld = yaml.getString("world.spawn.world", "");
+    this.globalSpawnX = yaml.getDouble("world.spawn.x", 0.0);
+    this.globalSpawnY = yaml.getDouble("world.spawn.y", 0.0);
+    this.globalSpawnZ = yaml.getDouble("world.spawn.z", 0.0);
+    this.globalSpawnYaw = (float) yaml.getDouble("world.spawn.yaw", 0.0);
+    this.globalSpawnPitch = (float) yaml.getDouble("world.spawn.pitch", 0.0);
   }
 
   public void save() {
@@ -83,6 +97,47 @@ public class CoreConfig {
 
   public boolean isDebug() {
     return debug;
+  }
+
+  public Location getGlobalSpawn() {
+    if (globalSpawnWorld == null || globalSpawnWorld.isBlank()) {
+      return null;
+    }
+    var world = Bukkit.getWorld(globalSpawnWorld);
+    if (world == null) {
+      return null;
+    }
+    return new Location(world, globalSpawnX, globalSpawnY, globalSpawnZ, globalSpawnYaw, globalSpawnPitch);
+  }
+
+  public void setGlobalSpawn(Location location) {
+    if (location == null || location.getWorld() == null) {
+      this.globalSpawnWorld = "";
+      this.globalSpawnX = 0.0;
+      this.globalSpawnY = 0.0;
+      this.globalSpawnZ = 0.0;
+      this.globalSpawnYaw = 0.0f;
+      this.globalSpawnPitch = 0.0f;
+      yaml.set("world.spawn.world", null);
+      yaml.set("world.spawn.x", null);
+      yaml.set("world.spawn.y", null);
+      yaml.set("world.spawn.z", null);
+      yaml.set("world.spawn.yaw", null);
+      yaml.set("world.spawn.pitch", null);
+      return;
+    }
+    this.globalSpawnWorld = location.getWorld().getName();
+    this.globalSpawnX = location.getX();
+    this.globalSpawnY = location.getY();
+    this.globalSpawnZ = location.getZ();
+    this.globalSpawnYaw = location.getYaw();
+    this.globalSpawnPitch = location.getPitch();
+    yaml.set("world.spawn.world", globalSpawnWorld);
+    yaml.set("world.spawn.x", globalSpawnX);
+    yaml.set("world.spawn.y", globalSpawnY);
+    yaml.set("world.spawn.z", globalSpawnZ);
+    yaml.set("world.spawn.yaw", globalSpawnYaw);
+    yaml.set("world.spawn.pitch", globalSpawnPitch);
   }
 
   public YamlConfiguration getRaw() {

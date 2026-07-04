@@ -21,6 +21,7 @@ ArcartX-Aubade 已完成 AXS 模块化收口，当前主线是继续把各功能
 | 岛屿展示推荐 | `/island checkmeout`、`/island checkmeout list`、`/island checkmeout vote <玩家>` | `CheckMeOutAddon` + `IslandCheckMeOutCommand`；提交自己的岛屿、列出推荐、投票 |
 | 岛屿传送点 | `/island warp list`、`/island warp <名称>`、`/island setwarp <名称>`、`/island delwarp <名称>` | `WarpsAddon` 接通既有命名 warp；`warp list` 作为列出入口 |
 | 岛屿群系切换 | `/island biome <群系>` | `BiomesAddon` + `IslandBiomeCommand`；按保护范围批量改 biome，并刷新 chunk |
+| 管理命令补全 | `/isadmin reload`、`/isadmin purge`、`/isadmin info <玩家>`、`/isadmin delete <玩家> confirm`、`/isadmin setspawn` | 补齐 `DefaultAdminCommand` help 里已宣传但此前未注册的 5 个管理子命令：`reload`→`onReload()`；`purge` 只删孤立岛屿（owner 无效且非 purge-protected）；`info/delete` 按玩家名解析岛屿；`setspawn` 落到 `CoreConfig` 的 `world.spawn.*` 并 `save()` |
 
 ## 进行中 / 待办
 | 阶段 / 条目 | 状态 | 优先级 | 说明 |

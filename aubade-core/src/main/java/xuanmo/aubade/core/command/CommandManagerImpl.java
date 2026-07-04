@@ -50,6 +50,11 @@ public class CommandManagerImpl implements CommandManager {
     registerSubCommand("island", new IslandSetWarpCommand(core));
     registerSubCommand("island", new IslandDelWarpCommand(core));
     registerSubCommand("isadmin", new DefaultAdminCommand());
+    registerSubCommand("isadmin", new AdminReloadCommand(core));
+    registerSubCommand("isadmin", new AdminPurgeCommand(core));
+    registerSubCommand("isadmin", new AdminInfoCommand(core));
+    registerSubCommand("isadmin", new AdminDeleteCommand(core));
+    registerSubCommand("isadmin", new AdminSetSpawnCommand(core));
   }
 
   @Override
@@ -137,4 +142,3 @@ public class CommandManagerImpl implements CommandManager {
     return args;
   }
 }
-

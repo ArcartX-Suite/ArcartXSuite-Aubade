@@ -11,6 +11,12 @@ dependencies {
     compileOnly("com.zaxxer:HikariCP:5.1.0")
     compileOnly("redis.clients:jedis:5.2.0")
     compileOnly("com.google.code.gson:gson:2.11.0")
+    testCompileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
+    testCompileOnly(files("libs/axs-api.jar"))
+    testRuntimeOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
+    testRuntimeOnly(files("libs/axs-api.jar"))
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
     runtimeOnly(project(":aubade-game-skyblock"))
 }
 

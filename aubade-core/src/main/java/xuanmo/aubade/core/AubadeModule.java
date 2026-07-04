@@ -15,7 +15,9 @@ import xuanmo.aubade.core.config.CoreConfig;
 import xuanmo.aubade.core.integration.AubadePlaceholderExpansion;
 import xuanmo.aubade.core.lifecycle.CoreLifecycleManager;
 import xuanmo.aubade.core.storage.StorageManager;
+import xuanmo.aubade.core.ui.packet.AdminUiPacketDispatcher;
 import xuanmo.arcartxsuite.api.AbstractAXSModule;
+import xuanmo.arcartxsuite.api.ClientPacketHandler;
 import xuanmo.arcartxsuite.api.ModuleCommandHandler;
 import xuanmo.arcartxsuite.api.ModuleDescriptor;
 import xuanmo.arcartxsuite.api.capability.DatabaseMigratable;
@@ -121,6 +123,14 @@ public final class AubadeModule extends AbstractAXSModule implements ModuleComma
   @Override
   protected @Nullable Object createPlaceholderExpansion() {
     return core != null ? new AubadePlaceholderExpansion(core) : null;
+  }
+
+  @Override
+  protected @Nullable ClientPacketHandler createPacketHandler() {
+    if (core == null || core.getUiManager() == null || core.getLifecycleManager() == null) {
+      return null;
+    }
+    return new AdminUiPacketDispatcher(core);
   }
 
   @Override
