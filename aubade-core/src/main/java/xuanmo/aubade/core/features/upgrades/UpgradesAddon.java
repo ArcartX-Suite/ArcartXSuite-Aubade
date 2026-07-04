@@ -16,8 +16,8 @@ public class UpgradesAddon extends AbstractExtensionAddon {
   private final Map<String, UpgradeConfig> upgradeConfigs = new HashMap<>();
   private final Map<UUID, Map<String, Integer>> islandUpgrades = new HashMap<>();
 
-  public UpgradesAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("upgrades")
+  public UpgradesAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("upgrades")
         .name("岛屿升级")
         .version("1.0.0")
         .mainClass(UpgradesAddon.class.getName())
@@ -36,9 +36,9 @@ public class UpgradesAddon extends AbstractExtensionAddon {
 
   @Override
   public void onLoad() {
-    File configFile = new File(plugin.getDataFolder(), "features/upgrades.yml");
+    File configFile = new File(core.getDataFolder(), "features/upgrades.yml");
     if (!configFile.exists()) {
-      plugin.saveResource("features/upgrades.yml", false);
+      core.saveResource("features/upgrades.yml", false);
     }
     YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
     loadUpgradeConfig("protection_range", config);
@@ -48,7 +48,7 @@ public class UpgradesAddon extends AbstractExtensionAddon {
   @Override
   public void onEnable() {
     super.onEnable();
-    plugin.getLogger().info("[Upgrades] 岛屿升级扩展已启用。");
+    core.getLogger().info("[Upgrades] 岛屿升级扩展已启用。");
   }
 
   @Override

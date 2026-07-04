@@ -26,8 +26,8 @@ public class TopBlockAddon extends AbstractExtensionAddon {
   private volatile long lastGlobalScan = 0;
   private static final long SCAN_INTERVAL_MS = 10 * 60 * 1000; // 10 分钟
 
-  public TopBlockAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("topblock")
+  public TopBlockAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("topblock")
         .name("最高方块排行")
         .version("1.0.0")
         .mainClass(TopBlockAddon.class.getName())
@@ -47,13 +47,13 @@ public class TopBlockAddon extends AbstractExtensionAddon {
   @Override
   public void onEnable() {
     super.onEnable();
-    plugin.getLogger().info("[TopBlock] 最高方块排行扩展已启用。");
+    core.getLogger().info("[TopBlock] 最高方块排行扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
-    plugin.getLogger().info("[TopBlock] 最高方块排行扩展已禁用。");
+    core.getLogger().info("[TopBlock] 最高方块排行扩展已禁用。");
   }
 
   /**

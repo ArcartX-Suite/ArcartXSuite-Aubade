@@ -23,8 +23,8 @@ public class MagicGenAddon extends AbstractExtensionAddon implements Listener {
   private final Map<Material, Material> genMappings = new HashMap<>();
   private boolean enabled = true;
 
-  public MagicGenAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("magicgen")
+  public MagicGenAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("magicgen")
         .name("魔法生成器")
         .version("1.0.0")
         .mainClass(MagicGenAddon.class.getName())
@@ -46,14 +46,14 @@ public class MagicGenAddon extends AbstractExtensionAddon implements Listener {
     super.onEnable();
     loadDefaultMappings();
     Bukkit.getPluginManager().registerEvents(this, javaPlugin());
-    plugin.getLogger().info("[MagicGen] 魔法生成器扩展已启用。");
+    core.getLogger().info("[MagicGen] 魔法生成器扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
     BlockFormEvent.getHandlerList().unregister(this);
-    plugin.getLogger().info("[MagicGen] 魔法生成器扩展已禁用。");
+    core.getLogger().info("[MagicGen] 魔法生成器扩展已禁用。");
   }
 
   private void loadDefaultMappings() {

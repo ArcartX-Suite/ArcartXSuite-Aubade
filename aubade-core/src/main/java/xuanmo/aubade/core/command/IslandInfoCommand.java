@@ -15,11 +15,11 @@ import xuanmo.aubade.core.AubadeCore;
  */
 public class IslandInfoCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
 
-  public IslandInfoCommand(AubadeCore plugin) {
+  public IslandInfoCommand(AubadeCore core) {
     super("info", "查看岛屿信息", Permission.PLAYER_INFO, true);
-    this.plugin = plugin;
+    this.core = core;
   }
 
   @Override
@@ -29,7 +29,7 @@ public class IslandInfoCommand extends CompositeCommand {
       return true;
     }
     Player player = (Player) sender;
-    var manager = plugin.getLifecycleManager().getIslandManager();
+    var manager = core.getLifecycleManager().getIslandManager();
 
     Optional<Island> opt;
     if (args.length > 0) {

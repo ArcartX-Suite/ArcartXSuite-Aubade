@@ -23,8 +23,8 @@ public class ExtraMobsAddon extends AbstractExtensionAddon implements Listener {
   private final Map<EntityType, Boolean> spawnAllowed = new HashMap<>();
   private double globalSpawnMultiplier = 1.0;
 
-  public ExtraMobsAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("extramobs")
+  public ExtraMobsAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("extramobs")
         .name("额外生物")
         .version("1.0.0")
         .mainClass(ExtraMobsAddon.class.getName())
@@ -46,14 +46,14 @@ public class ExtraMobsAddon extends AbstractExtensionAddon implements Listener {
     super.onEnable();
     loadDefaultRules();
     Bukkit.getPluginManager().registerEvents(this, javaPlugin());
-    plugin.getLogger().info("[ExtraMobs] 额外生物扩展已启用。");
+    core.getLogger().info("[ExtraMobs] 额外生物扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
     CreatureSpawnEvent.getHandlerList().unregister(this);
-    plugin.getLogger().info("[ExtraMobs] 额外生物扩展已禁用。");
+    core.getLogger().info("[ExtraMobs] 额外生物扩展已禁用。");
   }
 
   private void loadDefaultRules() {

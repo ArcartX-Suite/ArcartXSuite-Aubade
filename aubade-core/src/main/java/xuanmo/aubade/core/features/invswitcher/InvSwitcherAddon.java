@@ -25,8 +25,8 @@ public class InvSwitcherAddon extends AbstractExtensionAddon implements Listener
   // playerId -> worldName -> inventory snapshot
   private final Map<UUID, Map<String, InventorySnapshot>> worldInventories = new HashMap<>();
 
-  public InvSwitcherAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("invswitcher")
+  public InvSwitcherAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("invswitcher")
         .name("背包分离")
         .version("1.0.0")
         .mainClass(InvSwitcherAddon.class.getName())
@@ -47,14 +47,14 @@ public class InvSwitcherAddon extends AbstractExtensionAddon implements Listener
   public void onEnable() {
     super.onEnable();
     Bukkit.getPluginManager().registerEvents(this, javaPlugin());
-    plugin.getLogger().info("[InvSwitcher] 背包分离扩展已启用。");
+    core.getLogger().info("[InvSwitcher] 背包分离扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
     PlayerChangedWorldEvent.getHandlerList().unregister(this);
-    plugin.getLogger().info("[InvSwitcher] 背包分离扩展已禁用。");
+    core.getLogger().info("[InvSwitcher] 背包分离扩展已禁用。");
   }
 
   @EventHandler

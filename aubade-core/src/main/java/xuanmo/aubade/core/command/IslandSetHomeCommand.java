@@ -14,11 +14,11 @@ import xuanmo.aubade.core.AubadeCore;
  */
 public class IslandSetHomeCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
 
-  public IslandSetHomeCommand(AubadeCore plugin) {
+  public IslandSetHomeCommand(AubadeCore core) {
     super("sethome", "设置岛屿出生点", Permission.PLAYER, true);
-    this.plugin = plugin;
+    this.core = core;
   }
 
   @Override
@@ -28,7 +28,7 @@ public class IslandSetHomeCommand extends CompositeCommand {
       return true;
     }
     Player player = (Player) sender;
-    var manager = plugin.getLifecycleManager().getIslandManager();
+    var manager = core.getLifecycleManager().getIslandManager();
     Optional<Island> opt = manager.getIslandByOwner(player.getUniqueId());
     if (opt.isEmpty()) {
       player.sendMessage("§c你还没有岛屿。");

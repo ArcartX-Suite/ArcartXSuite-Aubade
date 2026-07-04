@@ -26,8 +26,8 @@ public class DimensionalTreesAddon extends AbstractExtensionAddon implements Lis
   private final Random random = new Random();
   private final Map<String, Material[]> dimensionDrops = new HashMap<>();
 
-  public DimensionalTreesAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("dimensionaltrees")
+  public DimensionalTreesAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("dimensionaltrees")
         .name("维度树木")
         .version("1.0.0")
         .mainClass(DimensionalTreesAddon.class.getName())
@@ -49,14 +49,14 @@ public class DimensionalTreesAddon extends AbstractExtensionAddon implements Lis
     super.onEnable();
     loadDefaultDrops();
     Bukkit.getPluginManager().registerEvents(this, javaPlugin());
-    plugin.getLogger().info("[DimensionalTrees] 维度树木扩展已启用。");
+    core.getLogger().info("[DimensionalTrees] 维度树木扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
     StructureGrowEvent.getHandlerList().unregister(this);
-    plugin.getLogger().info("[DimensionalTrees] 维度树木扩展已禁用。");
+    core.getLogger().info("[DimensionalTrees] 维度树木扩展已禁用。");
   }
 
   private void loadDefaultDrops() {

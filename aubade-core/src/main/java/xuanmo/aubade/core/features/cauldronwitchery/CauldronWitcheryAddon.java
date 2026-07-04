@@ -30,8 +30,8 @@ public class CauldronWitcheryAddon extends AbstractExtensionAddon implements Lis
 
   private final Map<RecipeKey, CauldronRecipe> recipes = new HashMap<>();
 
-  public CauldronWitcheryAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("cauldronwitchery")
+  public CauldronWitcheryAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("cauldronwitchery")
         .name("坩埚巫术")
         .version("1.0.0")
         .mainClass(CauldronWitcheryAddon.class.getName())
@@ -53,14 +53,14 @@ public class CauldronWitcheryAddon extends AbstractExtensionAddon implements Lis
     super.onEnable();
     loadDefaultRecipes();
     Bukkit.getPluginManager().registerEvents(this, javaPlugin());
-    plugin.getLogger().info("[CauldronWitchery] 坩埚巫术扩展已启用。");
+    core.getLogger().info("[CauldronWitchery] 坩埚巫术扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
     PlayerInteractEvent.getHandlerList().unregister(this);
-    plugin.getLogger().info("[CauldronWitchery] 坩埚巫术扩展已禁用。");
+    core.getLogger().info("[CauldronWitchery] 坩埚巫术扩展已禁用。");
   }
 
   private void loadDefaultRecipes() {

@@ -25,8 +25,8 @@ public class BorderAddon extends AbstractFeatureAddon {
   private final Map<UUID, Integer> borderSizeOverride = new HashMap<>();
   private boolean showBorder = true;
 
-  public BorderAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("border")
+  public BorderAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("border")
         .name("岛屿边界")
         .version("1.0.0")
         .mainClass(BorderAddon.class.getName())
@@ -52,7 +52,7 @@ public class BorderAddon extends AbstractFeatureAddon {
   public void onEnable() {
     super.onEnable();
     registerUi("border_settings.yml", "border_settings");
-    plugin.getLogger().info("[Border] 岛屿边界组件已启用。");
+    core.getLogger().info("[Border] 岛屿边界组件已启用。");
 
     // 启动边界刷新任务
     Bukkit.getScheduler().runTaskTimer(javaPlugin(), this::tickBorders, 20L, 20L);
@@ -66,7 +66,7 @@ public class BorderAddon extends AbstractFeatureAddon {
       WorldBorder wb = player.getWorld().getWorldBorder();
       player.setWorldBorder(null);
     }
-    plugin.getLogger().info("[Border] 岛屿边界组件已禁用。");
+    core.getLogger().info("[Border] 岛屿边界组件已禁用。");
   }
 
   /**
@@ -155,10 +155,10 @@ public class BorderAddon extends AbstractFeatureAddon {
   }
 
   private void registerUi(String fileName, String uiId) {
-    File uiDir = new File(plugin.getDataFolder(), "arcartx/ui");
+    File uiDir = new File(core.getDataFolder(), "arcartx/ui");
     File uiFile = new File(uiDir, fileName);
     if (!uiFile.exists()) {
-      plugin.saveResource("arcartx/ui/" + fileName, false);
+      core.saveResource("arcartx/ui/" + fileName, false);
     }
     getUiManager().registerUi(uiId, uiId, uiFile);
   }

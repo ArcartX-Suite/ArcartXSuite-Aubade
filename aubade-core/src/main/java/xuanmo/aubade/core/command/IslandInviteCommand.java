@@ -15,11 +15,11 @@ import xuanmo.aubade.core.AubadeCore;
  */
 public class IslandInviteCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
 
-  public IslandInviteCommand(AubadeCore plugin) {
+  public IslandInviteCommand(AubadeCore core) {
     super("invite", "邀请玩家加入岛屿", Permission.PLAYER, true);
-    this.plugin = plugin;
+    this.core = core;
   }
 
   @Override
@@ -38,7 +38,7 @@ public class IslandInviteCommand extends CompositeCommand {
       player.sendMessage("§c玩家不在线。");
       return true;
     }
-    var manager = plugin.getLifecycleManager().getIslandManager();
+    var manager = core.getLifecycleManager().getIslandManager();
     Optional<Island> opt = manager.getIslandByOwner(player.getUniqueId());
     if (opt.isEmpty()) {
       player.sendMessage("§c你还没有岛屿。");

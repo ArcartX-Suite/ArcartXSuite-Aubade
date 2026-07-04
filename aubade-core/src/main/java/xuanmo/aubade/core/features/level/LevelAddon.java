@@ -25,8 +25,8 @@ public class LevelAddon extends AbstractFeatureAddon {
   private LevelCalculator calculator;
   private LevelTopCache topCache;
 
-  public LevelAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("level")
+  public LevelAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("level")
         .name("岛屿等级")
         .version("1.0.0")
         .mainClass(LevelAddon.class.getName())
@@ -46,14 +46,14 @@ public class LevelAddon extends AbstractFeatureAddon {
   @Override
   public void onLoad() {
     // 加载方块价值表
-    File configFile = new File(plugin.getDataFolder(), "features/level.yml");
+    File configFile = new File(core.getDataFolder(), "features/level.yml");
     if (!configFile.exists()) {
-      plugin.saveResource("features/level.yml", false);
+      core.saveResource("features/level.yml", false);
     }
     YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-    blockValues = new BlockValues(config.getConfigurationSection("block-values"), 1L, plugin.getLogger());
-    calculator = new LevelCalculator(blockValues, plugin.getLogger());
-    topCache = new LevelTopCache(plugin.getLogger());
+    blockValues = new BlockValues(config.getConfigurationSection("block-values"), 1L, core.getLogger());
+    calculator = new LevelCalculator(blockValues, core.getLogger());
+    topCache = new LevelTopCache(core.getLogger());
   }
 
   @Override
@@ -64,20 +64,20 @@ public class LevelAddon extends AbstractFeatureAddon {
     try {
       getCommandManager().registerSubCommand("island", new LevelCommand(this));
     } catch (Exception e) {
-      plugin.getLogger().warning("[Level] 注册命令失败: " + e.getMessage());
+      core.getLogger().warning("[Level] 注册命令失败: " + e.getMessage());
     }
 
     // 注册 UI
     registerUi("level_display.yml", "island_level_display");
     registerUi("level_top.yml", "island_level_top");
 
-    plugin.getLogger().info("[Level] 岛屿等级组件已启用。");
+    core.getLogger().info("[Level] 岛屿等级组件已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
-    plugin.getLogger().info("[Level] 岛屿等级组件已禁用。");
+    core.getLogger().info("[Level] 岛屿等级组件已禁用。");
   }
 
   /**
@@ -123,10 +123,10 @@ public class LevelAddon extends AbstractFeatureAddon {
   }
 
   private void registerUi(String fileName, String uiId) {
-    File uiDir = new File(plugin.getDataFolder(), "arcartx/ui");
+    File uiDir = new File(core.getDataFolder(), "arcartx/ui");
     File uiFile = new File(uiDir, fileName);
     if (!uiFile.exists()) {
-      plugin.saveResource("arcartx/ui/" + fileName, false);
+      core.saveResource("arcartx/ui/" + fileName, false);
     }
     getUiManager().registerUi(uiId, uiId, uiFile);
   }

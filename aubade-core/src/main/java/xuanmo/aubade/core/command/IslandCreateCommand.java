@@ -14,11 +14,11 @@ import xuanmo.aubade.core.island.IslandManagerImpl;
  */
 public class IslandCreateCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
 
-  public IslandCreateCommand(AubadeCore plugin) {
+  public IslandCreateCommand(AubadeCore core) {
     super("create", "创建新岛屿", Permission.PLAYER_CREATE, true);
-    this.plugin = plugin;
+    this.core = core;
   }
 
   @Override
@@ -50,7 +50,7 @@ public class IslandCreateCommand extends CompositeCommand {
       return true;
     }
 
-    var island = manager.createIsland(player, plugin.getLifecycleManager().getCoreConfig().getDefaultGameMode(), blueprintId);
+    var island = manager.createIsland(player, core.getLifecycleManager().getCoreConfig().getDefaultGameMode(), blueprintId);
     if (island != null) {
       player.teleport(island.getCenter().clone().add(0, 1, 0));
       player.sendMessage("§a岛屿创建成功！使用 §e/island home §a返回。");
@@ -71,11 +71,11 @@ public class IslandCreateCommand extends CompositeCommand {
   }
 
   private IslandManagerImpl getIslandManager() {
-    return plugin.getLifecycleManager().getIslandManager();
+    return core.getLifecycleManager().getIslandManager();
   }
 
   private BlueprintRegistry getBlueprintRegistry() {
-    var addon = plugin.getLifecycleManager().getAddonLifecycleManager().getExtension("blueprint_generator");
+    var addon = core.getLifecycleManager().getAddonLifecycleManager().getExtension("blueprint_generator");
     if (addon instanceof xuanmo.aubade.core.features.blueprint.BlueprintGeneratorAddon gen) {
       return gen.getRegistry();
     }

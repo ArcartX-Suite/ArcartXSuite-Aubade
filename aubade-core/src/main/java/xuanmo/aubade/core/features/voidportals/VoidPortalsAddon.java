@@ -23,8 +23,8 @@ public class VoidPortalsAddon extends AbstractExtensionAddon implements Listener
   private double targetY = 128;
   private double targetZ = 0;
 
-  public VoidPortalsAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("voidportals")
+  public VoidPortalsAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("voidportals")
         .name("虚空传送")
         .version("1.0.0")
         .mainClass(VoidPortalsAddon.class.getName())
@@ -45,14 +45,14 @@ public class VoidPortalsAddon extends AbstractExtensionAddon implements Listener
   public void onEnable() {
     super.onEnable();
     Bukkit.getPluginManager().registerEvents(this, javaPlugin());
-    plugin.getLogger().info("[VoidPortals] 虚空传送扩展已启用。");
+    core.getLogger().info("[VoidPortals] 虚空传送扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
     PlayerMoveEvent.getHandlerList().unregister(this);
-    plugin.getLogger().info("[VoidPortals] 虚空传送扩展已禁用。");
+    core.getLogger().info("[VoidPortals] 虚空传送扩展已禁用。");
   }
 
   @EventHandler
@@ -70,14 +70,14 @@ public class VoidPortalsAddon extends AbstractExtensionAddon implements Listener
 
     World world = Bukkit.getWorld(targetWorld);
     if (world == null) {
-      plugin.getLogger().warning("[VoidPortals] 目标世界 " + targetWorld + " 不存在，传送到主世界。");
+      core.getLogger().warning("[VoidPortals] 目标世界 " + targetWorld + " 不存在，传送到主世界。");
       world = Bukkit.getWorlds().get(0);
     }
 
     Location target = new Location(world, targetX, targetY, targetZ);
     player.teleport(target);
     player.sendMessage("§a你掉入了虚空，已安全传送到 " + world.getName() + "。");
-    plugin.getLogger().info("[VoidPortals] 玩家 " + player.getName() + " 虚空传送至 " + world.getName());
+    core.getLogger().info("[VoidPortals] 玩家 " + player.getName() + " 虚空传送至 " + world.getName());
   }
 
   public void setTarget(String worldName, double x, double y, double z) {

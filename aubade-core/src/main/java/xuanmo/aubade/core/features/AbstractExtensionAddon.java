@@ -6,8 +6,8 @@ import xuanmo.aubade.core.AubadeCore;
 
 public abstract class AbstractExtensionAddon extends AbstractFeatureAddon implements ExtensionAddon {
 
-  public AbstractExtensionAddon(AubadeCore plugin, AddonDescriptor descriptor) {
-    super(plugin, descriptor);
+  public AbstractExtensionAddon(AubadeCore core, AddonDescriptor descriptor) {
+    super(core, descriptor);
   }
 
   @Override

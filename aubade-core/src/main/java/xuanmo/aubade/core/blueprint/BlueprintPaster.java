@@ -13,10 +13,10 @@ import xuanmo.aubade.core.AubadeCore;
  */
 public class BlueprintPaster {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
 
-  public BlueprintPaster(AubadeCore plugin) {
-    this.plugin = plugin;
+  public BlueprintPaster(AubadeCore core) {
+    this.core = core;
   }
 
   /**
@@ -66,6 +66,6 @@ public class BlueprintPaster {
           cancel();
         }
       }
-    }.runTaskTimer(plugin.plugin(), 0L, 1L);
+    }.runTaskTimer(core.plugin(), 0L, 1L);
   }
 }

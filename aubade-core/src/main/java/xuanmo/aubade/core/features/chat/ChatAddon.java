@@ -23,8 +23,8 @@ public class ChatAddon extends AbstractExtensionAddon implements Listener {
 
   private final Map<UUID, ChatMode> playerChatMode = new HashMap<>();
 
-  public ChatAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("island_chat")
+  public ChatAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("island_chat")
         .name("岛屿聊天")
         .version("1.0.0")
         .mainClass(ChatAddon.class.getName())
@@ -45,7 +45,7 @@ public class ChatAddon extends AbstractExtensionAddon implements Listener {
   public void onEnable() {
     super.onEnable();
     Bukkit.getPluginManager().registerEvents(this, javaPlugin());
-    plugin.getLogger().info("[Chat] 岛屿聊天扩展已启用。");
+    core.getLogger().info("[Chat] 岛屿聊天扩展已启用。");
   }
 
   @Override
@@ -53,7 +53,7 @@ public class ChatAddon extends AbstractExtensionAddon implements Listener {
     super.onDisable();
     AsyncPlayerChatEvent.getHandlerList().unregister(this);
     playerChatMode.clear();
-    plugin.getLogger().info("[Chat] 岛屿聊天扩展已禁用。");
+    core.getLogger().info("[Chat] 岛屿聊天扩展已禁用。");
   }
 
   public ChatMode getChatMode(UUID playerId) {
@@ -103,7 +103,7 @@ public class ChatAddon extends AbstractExtensionAddon implements Listener {
     }
 
     // 控制台也打印
-    plugin.getLogger().info("[Chat] " + format.replaceAll("§[0-9a-fk-or]", ""));
+    core.getLogger().info("[Chat] " + format.replaceAll("§[0-9a-fk-or]", ""));
   }
 
   public enum ChatMode {

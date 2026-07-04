@@ -17,8 +17,8 @@ public class BankAddon extends AbstractFeatureAddon {
 
   private double interestRate = 0.02; // 2% 默认利率
 
-  public BankAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("bank")
+  public BankAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("bank")
         .name("岛屿银行")
         .version("1.0.0")
         .mainClass(BankAddon.class.getName())
@@ -44,13 +44,13 @@ public class BankAddon extends AbstractFeatureAddon {
   public void onEnable() {
     super.onEnable();
     registerUi("island_bank.yml", "island_bank");
-    plugin.getLogger().info("[Bank] 岛屿银行组件已启用。");
+    core.getLogger().info("[Bank] 岛屿银行组件已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
-    plugin.getLogger().info("[Bank] 岛屿银行组件已禁用。");
+    core.getLogger().info("[Bank] 岛屿银行组件已禁用。");
   }
 
   public double getBalance(UUID islandId) {
@@ -101,10 +101,10 @@ public class BankAddon extends AbstractFeatureAddon {
   }
 
   private void registerUi(String fileName, String uiId) {
-    File uiDir = new File(plugin.getDataFolder(), "arcartx/ui");
+    File uiDir = new File(core.getDataFolder(), "arcartx/ui");
     File uiFile = new File(uiDir, fileName);
     if (!uiFile.exists()) {
-      plugin.saveResource("arcartx/ui/" + fileName, false);
+      core.saveResource("arcartx/ui/" + fileName, false);
     }
     getUiManager().registerUi(uiId, uiId, uiFile);
   }

@@ -17,12 +17,12 @@ import xuanmo.aubade.core.features.level.LevelTopCache;
  */
 public class IslandTopCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
   private static final int PER_PAGE = 10;
 
-  public IslandTopCommand(AubadeCore plugin) {
+  public IslandTopCommand(AubadeCore core) {
     super("top", "查看岛屿等级排行榜", Permission.PLAYER_TOP, true);
-    this.plugin = plugin;
+    this.core = core;
   }
 
   @Override
@@ -66,7 +66,7 @@ public class IslandTopCommand extends CompositeCommand {
     player.sendMessage("§6========== 岛屿等级排行榜 (第 " + page + "/" + totalPages + " 页) ==========");
     for (int i = start; i < end; i++) {
       LevelTopCache.TopEntry entry = topList.get(i);
-      Optional<Island> opt = plugin.getLifecycleManager().getIslandManager().getIslandById(entry.islandId());
+      Optional<Island> opt = core.getLifecycleManager().getIslandManager().getIslandById(entry.islandId());
       String islandName = "未知岛屿";
       String ownerName = "未知";
       if (opt.isPresent()) {
@@ -80,7 +80,7 @@ public class IslandTopCommand extends CompositeCommand {
     }
 
     // 显示玩家自身排名
-    Optional<Island> myIsland = plugin.getLifecycleManager().getIslandManager().getIslandByOwner(player.getUniqueId());
+    Optional<Island> myIsland = core.getLifecycleManager().getIslandManager().getIslandByOwner(player.getUniqueId());
     if (myIsland.isPresent()) {
       int myRank = levelAddon.getTopCache().getRank(myIsland.get().getUniqueId());
       if (myRank > 0) {
@@ -100,7 +100,7 @@ public class IslandTopCommand extends CompositeCommand {
   }
 
   private LevelAddon resolveLevelAddon() {
-    var addon = plugin.getLifecycleManager().getAddonLifecycleManager().getAddon("level");
+    var addon = core.getLifecycleManager().getAddonLifecycleManager().getAddon("level");
     if (addon instanceof LevelAddon level) {
       return level;
     }

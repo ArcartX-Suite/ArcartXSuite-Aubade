@@ -22,8 +22,8 @@ public class CheckMeOutAddon extends AbstractExtensionAddon {
   private final Map<UUID, SubmittedIsland> submissions = new ConcurrentHashMap<>();
   private final Map<UUID, java.util.Set<UUID>> votes = new ConcurrentHashMap<>();
 
-  public CheckMeOutAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("checkmeout")
+  public CheckMeOutAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("checkmeout")
         .name("岛屿审核")
         .version("1.0.0")
         .mainClass(CheckMeOutAddon.class.getName())
@@ -43,13 +43,13 @@ public class CheckMeOutAddon extends AbstractExtensionAddon {
   @Override
   public void onEnable() {
     super.onEnable();
-    plugin.getLogger().info("[CheckMeOut] 岛屿审核扩展已启用。");
+    core.getLogger().info("[CheckMeOut] 岛屿审核扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
-    plugin.getLogger().info("[CheckMeOut] 岛屿审核扩展已禁用。");
+    core.getLogger().info("[CheckMeOut] 岛屿审核扩展已禁用。");
   }
 
   /**

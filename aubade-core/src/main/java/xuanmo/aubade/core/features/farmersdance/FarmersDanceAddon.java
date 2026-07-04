@@ -34,8 +34,8 @@ public class FarmersDanceAddon extends AbstractExtensionAddon implements Listene
   private int growthTicks = 2;
   private int taskId = -1;
 
-  public FarmersDanceAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("farmersdance")
+  public FarmersDanceAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("farmersdance")
         .name("农夫之舞")
         .version("1.0.0")
         .mainClass(FarmersDanceAddon.class.getName())
@@ -57,7 +57,7 @@ public class FarmersDanceAddon extends AbstractExtensionAddon implements Listene
     super.onEnable();
     Bukkit.getPluginManager().registerEvents(this, javaPlugin());
     startGrowthTask();
-    plugin.getLogger().info("[FarmersDance] 农夫之舞扩展已启用。");
+    core.getLogger().info("[FarmersDance] 农夫之舞扩展已启用。");
   }
 
   @Override
@@ -68,7 +68,7 @@ public class FarmersDanceAddon extends AbstractExtensionAddon implements Listene
       Bukkit.getScheduler().cancelTask(taskId);
     }
     sneakingPlayers.clear();
-    plugin.getLogger().info("[FarmersDance] 农夫之舞扩展已禁用。");
+    core.getLogger().info("[FarmersDance] 农夫之舞扩展已禁用。");
   }
 
   private void startGrowthTask() {

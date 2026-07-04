@@ -16,14 +16,14 @@ import xuanmo.aubade.core.AubadeCore;
  */
 public class IslandBanCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
   private final boolean unban;
 
-  public IslandBanCommand(AubadeCore plugin, boolean unban) {
+  public IslandBanCommand(AubadeCore core, boolean unban) {
     super(unban ? "unban" : "ban",
         unban ? "解除禁止玩家" : "禁止玩家进入",
         unban ? Permission.PLAYER_UNBAN : Permission.PLAYER_BAN, true);
-    this.plugin = plugin;
+    this.core = core;
     this.unban = unban;
   }
 
@@ -38,7 +38,7 @@ public class IslandBanCommand extends CompositeCommand {
       return true;
     }
     Player player = (Player) sender;
-    var manager = plugin.getLifecycleManager().getIslandManager();
+    var manager = core.getLifecycleManager().getIslandManager();
     Optional<Island> opt = manager.getIslandByOwner(player.getUniqueId());
     if (opt.isEmpty()) {
       player.sendMessage("§c你还没有岛屿。");

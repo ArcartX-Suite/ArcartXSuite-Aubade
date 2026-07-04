@@ -28,8 +28,8 @@ public class BiomesAddon extends AbstractFeatureAddon {
       "swamp", "savanna_plateau", "meadow", "cherry_grove", "badlands", "ice_spikes"
   );
 
-  public BiomesAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("biomes")
+  public BiomesAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("biomes")
         .name("生物群系")
         .version("1.0.0")
         .mainClass(BiomesAddon.class.getName())
@@ -50,13 +50,13 @@ public class BiomesAddon extends AbstractFeatureAddon {
   public void onEnable() {
     super.onEnable();
     registerUi("biome_selector.yml", "biome_selector");
-    plugin.getLogger().info("[Biomes] 生物群系组件已启用。");
+    core.getLogger().info("[Biomes] 生物群系组件已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
-    plugin.getLogger().info("[Biomes] 生物群系组件已禁用。");
+    core.getLogger().info("[Biomes] 生物群系组件已禁用。");
   }
 
   public List<String> getAllowedBiomes() {
@@ -75,7 +75,7 @@ public class BiomesAddon extends AbstractFeatureAddon {
     try {
       target = Biome.valueOf(biomeKey.toUpperCase());
     } catch (IllegalArgumentException e) {
-      plugin.getLogger().warning("[Biomes] 未知生物群系: " + biomeKey);
+      core.getLogger().warning("[Biomes] 未知生物群系: " + biomeKey);
       return false;
     }
 
@@ -134,15 +134,15 @@ public class BiomesAddon extends AbstractFeatureAddon {
       }
     }
 
-    plugin.getLogger().info("[Biomes] 已将岛屿 " + island.getUniqueId() + " 生物群系更改为 " + biomeKey);
+    core.getLogger().info("[Biomes] 已将岛屿 " + island.getUniqueId() + " 生物群系更改为 " + biomeKey);
     return true;
   }
 
   private void registerUi(String fileName, String uiId) {
-    File uiDir = new File(plugin.getDataFolder(), "arcartx/ui");
+    File uiDir = new File(core.getDataFolder(), "arcartx/ui");
     File uiFile = new File(uiDir, fileName);
     if (!uiFile.exists()) {
-      plugin.saveResource("arcartx/ui/" + fileName, false);
+      core.saveResource("arcartx/ui/" + fileName, false);
     }
     getUiManager().registerUi(uiId, uiId, uiFile);
   }

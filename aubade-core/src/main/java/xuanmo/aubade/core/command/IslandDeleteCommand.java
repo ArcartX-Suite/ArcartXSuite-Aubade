@@ -15,11 +15,11 @@ import xuanmo.aubade.core.island.IslandManagerImpl;
  */
 public class IslandDeleteCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
 
-  public IslandDeleteCommand(AubadeCore plugin) {
+  public IslandDeleteCommand(AubadeCore core) {
     super("delete", "删除当前岛屿", Permission.PLAYER_DELETE, true);
-    this.plugin = plugin;
+    this.core = core;
   }
 
   @Override
@@ -29,7 +29,7 @@ public class IslandDeleteCommand extends CompositeCommand {
       return true;
     }
     Player player = (Player) sender;
-    IslandManagerImpl manager = plugin.getLifecycleManager().getIslandManager();
+    IslandManagerImpl manager = core.getLifecycleManager().getIslandManager();
     Optional<Island> opt = manager.getIslandByOwner(player.getUniqueId());
     if (opt.isEmpty()) {
       player.sendMessage("§c你还没有岛屿。");

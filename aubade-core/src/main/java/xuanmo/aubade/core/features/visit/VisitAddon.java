@@ -21,8 +21,8 @@ public class VisitAddon extends AbstractExtensionAddon {
   // 记录当前处于访客模式的玩家 -> 目标岛屿
   private final Map<UUID, UUID> visitingMap = new HashMap<>();
 
-  public VisitAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("visit")
+  public VisitAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("visit")
         .name("岛屿参观")
         .version("1.0.0")
         .mainClass(VisitAddon.class.getName())
@@ -42,14 +42,14 @@ public class VisitAddon extends AbstractExtensionAddon {
   @Override
   public void onEnable() {
     super.onEnable();
-    plugin.getLogger().info("[Visit] 岛屿参观扩展已启用。");
+    core.getLogger().info("[Visit] 岛屿参观扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
     visitingMap.clear();
-    plugin.getLogger().info("[Visit] 岛屿参观扩展已禁用。");
+    core.getLogger().info("[Visit] 岛屿参观扩展已禁用。");
   }
 
   /**

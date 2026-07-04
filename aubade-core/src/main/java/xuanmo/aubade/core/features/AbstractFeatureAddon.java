@@ -11,12 +11,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class AbstractFeatureAddon implements FeatureAddon {
 
-  protected final AubadeCore plugin;
+  protected final AubadeCore core;
   protected final AddonDescriptor descriptor;
   protected boolean enabled = false;
 
-  public AbstractFeatureAddon(AubadeCore plugin, AddonDescriptor descriptor) {
-    this.plugin = plugin;
+  public AbstractFeatureAddon(AubadeCore core, AddonDescriptor descriptor) {
+    this.core = core;
     this.descriptor = descriptor;
   }
 
@@ -48,27 +48,27 @@ public abstract class AbstractFeatureAddon implements FeatureAddon {
     return enabled;
   }
 
-  public AubadeCore getPlugin() {
-    return plugin;
+  public AubadeCore getCore() {
+    return core;
   }
 
   public CoreLifecycleManager getLifecycleManager() {
-    return plugin.getLifecycleManager();
+    return core.getLifecycleManager();
   }
 
   public IslandManager getIslandManager() {
-    return plugin.getIslandManager();
+    return core.getIslandManager();
   }
 
   public CommandManager getCommandManager() {
-    return plugin.getCommandManager();
+    return core.getCommandManager();
   }
 
   public UiManager getUiManager() {
-    return plugin.getUiManager();
+    return core.getUiManager();
   }
 
   protected JavaPlugin javaPlugin() {
-    return plugin.plugin();
+    return core.plugin();
   }
 }

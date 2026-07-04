@@ -14,11 +14,11 @@ import xuanmo.aubade.core.AubadeCore;
  */
 public class IslandLeaveCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
 
-  public IslandLeaveCommand(AubadeCore plugin) {
+  public IslandLeaveCommand(AubadeCore core) {
     super("leave", "离开当前岛屿", Permission.PLAYER_LEAVE, true);
-    this.plugin = plugin;
+    this.core = core;
   }
 
   @Override
@@ -28,7 +28,7 @@ public class IslandLeaveCommand extends CompositeCommand {
       return true;
     }
     Player player = (Player) sender;
-    var manager = plugin.getLifecycleManager().getIslandManager();
+    var manager = core.getLifecycleManager().getIslandManager();
     Optional<Island> opt = manager.getIslandByOwner(player.getUniqueId());
 
     // 先查是不是岛主

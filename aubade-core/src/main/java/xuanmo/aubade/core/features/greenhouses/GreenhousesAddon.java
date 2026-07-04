@@ -38,8 +38,8 @@ public class GreenhousesAddon extends AbstractExtensionAddon {
   private int taskId = -1;
   private long scanIntervalTicks = 100L; // 5 秒
 
-  public GreenhousesAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("greenhouses")
+  public GreenhousesAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("greenhouses")
         .name("温室")
         .version("1.0.0")
         .mainClass(GreenhousesAddon.class.getName())
@@ -60,7 +60,7 @@ public class GreenhousesAddon extends AbstractExtensionAddon {
   public void onEnable() {
     super.onEnable();
     startScanTask();
-    plugin.getLogger().info("[Greenhouses] 温室扩展已启用。");
+    core.getLogger().info("[Greenhouses] 温室扩展已启用。");
   }
 
   @Override
@@ -69,7 +69,7 @@ public class GreenhousesAddon extends AbstractExtensionAddon {
     if (taskId != -1) {
       Bukkit.getScheduler().cancelTask(taskId);
     }
-    plugin.getLogger().info("[Greenhouses] 温室扩展已禁用。");
+    core.getLogger().info("[Greenhouses] 温室扩展已禁用。");
   }
 
   private void startScanTask() {

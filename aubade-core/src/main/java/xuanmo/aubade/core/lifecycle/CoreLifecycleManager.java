@@ -1,6 +1,8 @@
 package xuanmo.aubade.core.lifecycle;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import xuanmo.aubade.core.AubadeCore;
 import xuanmo.aubade.core.config.CoreConfig;
 import xuanmo.aubade.core.features.bank.BankAddon;
@@ -32,6 +34,10 @@ import xuanmo.aubade.core.features.warps.WarpsAddon;
 import xuanmo.aubade.core.island.IslandGrid;
 import xuanmo.aubade.core.island.IslandManagerImpl;
 import xuanmo.aubade.core.island.IslandProtectionManager;
+import xuanmo.aubade.core.listener.IslandBlockListener;
+import xuanmo.aubade.core.listener.IslandCombatListener;
+import xuanmo.aubade.core.listener.IslandInteractionListener;
+import xuanmo.aubade.core.listener.IslandMovementListener;
 import xuanmo.aubade.core.player.PlayerManagerImpl;
 import xuanmo.aubade.core.storage.JdbcIslandRepository;
 import xuanmo.aubade.core.storage.JdbcPlayerRepository;
@@ -39,8 +45,9 @@ import xuanmo.aubade.core.storage.StorageManager;
 import xuanmo.aubade.core.ui.UiManager;
 import xuanmo.aubade.core.world.WorldManagerImpl;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.World;
 
 public class CoreLifecycleManager {
 
@@ -52,6 +59,7 @@ public class CoreLifecycleManager {
   private PlayerManagerImpl playerManager;
   private WorldManagerImpl worldManager;
   private IslandProtectionManager protectionManager;
+  private final List<Listener> islandListeners = new ArrayList<>();
   private UiManager uiManager;
 
   public CoreLifecycleManager(AubadeCore core) {
@@ -84,7 +92,10 @@ public class CoreLifecycleManager {
     core.worldManager(worldManager);
 
     this.protectionManager = new IslandProtectionManager(islandManager);
-    Bukkit.getPluginManager().registerEvents(protectionManager, core.plugin());
+    registerIslandListener(new IslandBlockListener(core, protectionManager));
+    registerIslandListener(new IslandInteractionListener(core, protectionManager));
+    registerIslandListener(new IslandCombatListener(core, protectionManager));
+    registerIslandListener(new IslandMovementListener(core, protectionManager));
 
     this.uiManager = new UiManager(core);
     core.uiManager(uiManager);
@@ -123,12 +134,25 @@ public class CoreLifecycleManager {
   }
 
   public void onDisable() {
+    unregisterIslandListeners();
     if (addonLifecycleManager != null) {
       addonLifecycleManager.disableAddons();
     }
     if (storageManager != null) {
       storageManager.shutdown();
     }
+  }
+
+  private void registerIslandListener(Listener listener) {
+    islandListeners.add(listener);
+    Bukkit.getPluginManager().registerEvents(listener, core.plugin());
+  }
+
+  private void unregisterIslandListeners() {
+    for (Listener listener : islandListeners) {
+      HandlerList.unregisterAll(listener);
+    }
+    islandListeners.clear();
   }
 
   public void onReload() {

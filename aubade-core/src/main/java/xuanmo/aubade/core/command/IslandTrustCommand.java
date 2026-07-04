@@ -16,14 +16,14 @@ import xuanmo.aubade.core.AubadeCore;
  */
 public class IslandTrustCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
   private final boolean untrust;
 
-  public IslandTrustCommand(AubadeCore plugin, boolean untrust) {
+  public IslandTrustCommand(AubadeCore core, boolean untrust) {
     super(untrust ? "untrust" : "trust",
         untrust ? "取消信任玩家" : "信任玩家",
         untrust ? Permission.PLAYER_UNTRUST : Permission.PLAYER_TRUST, true);
-    this.plugin = plugin;
+    this.core = core;
     this.untrust = untrust;
   }
 
@@ -38,7 +38,7 @@ public class IslandTrustCommand extends CompositeCommand {
       return true;
     }
     Player player = (Player) sender;
-    var manager = plugin.getLifecycleManager().getIslandManager();
+    var manager = core.getLifecycleManager().getIslandManager();
     Optional<Island> opt = manager.getIslandByOwner(player.getUniqueId());
     if (opt.isEmpty()) {
       player.sendMessage("§c你还没有岛屿。");

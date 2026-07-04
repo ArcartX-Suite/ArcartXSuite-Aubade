@@ -18,8 +18,8 @@ public class ChallengesAddon extends AbstractFeatureAddon {
   private final Map<String, Challenge> challenges = new HashMap<>();
   private final Map<UUID, ChallengeProgress> progressMap = new HashMap<>();
 
-  public ChallengesAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("challenges")
+  public ChallengesAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("challenges")
         .name("挑战系统")
         .version("1.0.0")
         .mainClass(ChallengesAddon.class.getName())
@@ -47,13 +47,13 @@ public class ChallengesAddon extends AbstractFeatureAddon {
     super.onEnable();
     registerUi("challenges_list.yml", "challenges_list");
     registerUi("challenge_detail.yml", "challenge_detail");
-    plugin.getLogger().info("[Challenges] 挑战系统组件已启用。");
+    core.getLogger().info("[Challenges] 挑战系统组件已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
-    plugin.getLogger().info("[Challenges] 挑战系统组件已禁用。");
+    core.getLogger().info("[Challenges] 挑战系统组件已禁用。");
   }
 
   public Challenge getChallenge(String id) {
@@ -86,10 +86,10 @@ public class ChallengesAddon extends AbstractFeatureAddon {
   }
 
   private void registerUi(String fileName, String uiId) {
-    File uiDir = new File(plugin.getDataFolder(), "arcartx/ui");
+    File uiDir = new File(core.getDataFolder(), "arcartx/ui");
     File uiFile = new File(uiDir, fileName);
     if (!uiFile.exists()) {
-      plugin.saveResource("arcartx/ui/" + fileName, false);
+      core.saveResource("arcartx/ui/" + fileName, false);
     }
     getUiManager().registerUi(uiId, uiId, uiFile);
   }

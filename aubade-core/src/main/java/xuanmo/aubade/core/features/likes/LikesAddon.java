@@ -20,8 +20,8 @@ public class LikesAddon extends AbstractExtensionAddon {
   // islandId -> set of player UUIDs who liked
   private final Map<UUID, java.util.Set<UUID>> likesRecord = new ConcurrentHashMap<>();
 
-  public LikesAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("likes")
+  public LikesAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("likes")
         .name("岛屿点赞")
         .version("1.0.0")
         .mainClass(LikesAddon.class.getName())
@@ -41,13 +41,13 @@ public class LikesAddon extends AbstractExtensionAddon {
   @Override
   public void onEnable() {
     super.onEnable();
-    plugin.getLogger().info("[Likes] 岛屿点赞扩展已启用。");
+    core.getLogger().info("[Likes] 岛屿点赞扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
-    plugin.getLogger().info("[Likes] 岛屿点赞扩展已禁用。");
+    core.getLogger().info("[Likes] 岛屿点赞扩展已禁用。");
   }
 
   /**

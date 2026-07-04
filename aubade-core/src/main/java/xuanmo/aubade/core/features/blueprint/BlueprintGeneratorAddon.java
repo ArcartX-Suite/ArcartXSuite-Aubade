@@ -14,8 +14,8 @@ public class BlueprintGeneratorAddon extends AbstractExtensionAddon {
 
   private BlueprintRegistry registry;
 
-  public BlueprintGeneratorAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("blueprint_generator")
+  public BlueprintGeneratorAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("blueprint_generator")
         .name("蓝图生成器")
         .version("1.0.0")
         .mainClass(BlueprintGeneratorAddon.class.getName())
@@ -35,19 +35,19 @@ public class BlueprintGeneratorAddon extends AbstractExtensionAddon {
   @Override
   public void onEnable() {
     super.onEnable();
-    this.registry = new BlueprintRegistry(plugin.getLogger(), plugin.getDataFolder());
+    this.registry = new BlueprintRegistry(core.getLogger(), core.getDataFolder());
     this.registry.loadAll();
 
     // 释放默认示例蓝图
     releaseDefaultBlueprints();
 
-    plugin.getLogger().info("[BlueprintGenerator] 蓝图生成器扩展已启用，共 " + registry.getAllBlueprints().size() + " 个蓝图。");
+    core.getLogger().info("[BlueprintGenerator] 蓝图生成器扩展已启用，共 " + registry.getAllBlueprints().size() + " 个蓝图。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
-    plugin.getLogger().info("[BlueprintGenerator] 蓝图生成器扩展已禁用。");
+    core.getLogger().info("[BlueprintGenerator] 蓝图生成器扩展已禁用。");
   }
 
   public BlueprintRegistry getRegistry() {
@@ -116,7 +116,7 @@ public class BlueprintGeneratorAddon extends AbstractExtensionAddon {
             - { x: -1, y: 1, z: 1, material: CRAFTING_TABLE }
           """);
     } catch (Exception e) {
-      plugin.getLogger().warning("[BlueprintGenerator] 释放示例蓝图失败: " + e.getMessage());
+      core.getLogger().warning("[BlueprintGenerator] 释放示例蓝图失败: " + e.getMessage());
     }
   }
 }

@@ -12,11 +12,11 @@ import xuanmo.aubade.core.AubadeCore;
  */
 public class IslandAcceptCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
 
-  public IslandAcceptCommand(AubadeCore plugin) {
+  public IslandAcceptCommand(AubadeCore core) {
     super("accept", "接受岛屿邀请", Permission.PLAYER, true);
-    this.plugin = plugin;
+    this.core = core;
   }
 
   @Override
@@ -26,7 +26,7 @@ public class IslandAcceptCommand extends CompositeCommand {
       return true;
     }
     Player player = (Player) sender;
-    var manager = plugin.getLifecycleManager().getIslandManager();
+    var manager = core.getLifecycleManager().getIslandManager();
     if (manager.acceptInvite(player)) {
       player.sendMessage("§a你已加入岛屿！");
     }

@@ -18,8 +18,8 @@ public class ControlPanelAddon extends AbstractExtensionAddon {
 
   private final Map<UUID, Long> lastPurgeCheck = new HashMap<>();
 
-  public ControlPanelAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("controlpanel")
+  public ControlPanelAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("controlpanel")
         .name("控制面板")
         .version("1.0.0")
         .mainClass(ControlPanelAddon.class.getName())
@@ -39,13 +39,13 @@ public class ControlPanelAddon extends AbstractExtensionAddon {
   @Override
   public void onEnable() {
     super.onEnable();
-    plugin.getLogger().info("[ControlPanel] 管理员控制面板扩展已启用。");
+    core.getLogger().info("[ControlPanel] 管理员控制面板扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
-    plugin.getLogger().info("[ControlPanel] 管理员控制面板扩展已禁用。");
+    core.getLogger().info("[ControlPanel] 管理员控制面板扩展已禁用。");
   }
 
   /**
@@ -104,7 +104,7 @@ public class ControlPanelAddon extends AbstractExtensionAddon {
     island.setLevel(0);
     island.setBankBalance(0);
     getIslandManager().saveIsland(island);
-    plugin.getLogger().info("[ControlPanel] 岛屿 " + islandId + " 已被重置。");
+    core.getLogger().info("[ControlPanel] 岛屿 " + islandId + " 已被重置。");
     return true;
   }
 }

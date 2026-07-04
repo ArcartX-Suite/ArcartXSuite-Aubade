@@ -15,11 +15,11 @@ import xuanmo.aubade.core.AubadeCore;
  */
 public class IslandHomeCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
 
-  public IslandHomeCommand(AubadeCore plugin) {
+  public IslandHomeCommand(AubadeCore core) {
     super("home", "返回岛屿出生点", Permission.PLAYER, true);
-    this.plugin = plugin;
+    this.core = core;
   }
 
   @Override
@@ -29,7 +29,7 @@ public class IslandHomeCommand extends CompositeCommand {
       return true;
     }
     Player player = (Player) sender;
-    var manager = plugin.getLifecycleManager().getIslandManager();
+    var manager = core.getLifecycleManager().getIslandManager();
     Optional<Island> opt = manager.getIslandByOwner(player.getUniqueId());
     if (opt.isEmpty()) {
       player.sendMessage("§c你还没有岛屿，使用 §e/island create §c创建一个。");

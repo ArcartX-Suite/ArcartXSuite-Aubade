@@ -34,8 +34,8 @@ public class TwerkingForTreesAddon extends AbstractExtensionAddon implements Lis
   private int radius = 4;
   private double chance = 0.3;
 
-  public TwerkingForTreesAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("twerkingfortrees")
+  public TwerkingForTreesAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("twerkingfortrees")
         .name("抖臀催树")
         .version("1.0.0")
         .mainClass(TwerkingForTreesAddon.class.getName())
@@ -56,14 +56,14 @@ public class TwerkingForTreesAddon extends AbstractExtensionAddon implements Lis
   public void onEnable() {
     super.onEnable();
     Bukkit.getPluginManager().registerEvents(this, javaPlugin());
-    plugin.getLogger().info("[TwerkingForTrees] 抖臀催树扩展已启用。");
+    core.getLogger().info("[TwerkingForTrees] 抖臀催树扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
     PlayerToggleSneakEvent.getHandlerList().unregister(this);
-    plugin.getLogger().info("[TwerkingForTrees] 抖臀催树扩展已禁用。");
+    core.getLogger().info("[TwerkingForTrees] 抖臀催树扩展已禁用。");
   }
 
   @EventHandler

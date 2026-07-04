@@ -25,8 +25,8 @@ public class LimitsAddon extends AbstractExtensionAddon implements Listener {
   private int maxBlocksPerType = 1000;
   private int maxEntitiesPerType = 50;
 
-  public LimitsAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("limits")
+  public LimitsAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("limits")
         .name("岛屿限制")
         .version("1.0.0")
         .mainClass(LimitsAddon.class.getName())
@@ -47,7 +47,7 @@ public class LimitsAddon extends AbstractExtensionAddon implements Listener {
   public void onEnable() {
     super.onEnable();
     Bukkit.getPluginManager().registerEvents(this, javaPlugin());
-    plugin.getLogger().info("[Limits] 岛屿限制扩展已启用。");
+    core.getLogger().info("[Limits] 岛屿限制扩展已启用。");
   }
 
   @Override
@@ -55,7 +55,7 @@ public class LimitsAddon extends AbstractExtensionAddon implements Listener {
     super.onDisable();
     BlockPlaceEvent.getHandlerList().unregister(this);
     CreatureSpawnEvent.getHandlerList().unregister(this);
-    plugin.getLogger().info("[Limits] 岛屿限制扩展已禁用。");
+    core.getLogger().info("[Limits] 岛屿限制扩展已禁用。");
   }
 
   @EventHandler

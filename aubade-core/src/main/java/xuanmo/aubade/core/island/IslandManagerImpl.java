@@ -23,7 +23,7 @@ import xuanmo.aubade.core.storage.JdbcIslandRepository;
  */
 public class IslandManagerImpl implements IslandManager {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
   private final Logger logger;
   private final IslandCache cache;
   private final IslandGrid grid;
@@ -33,14 +33,14 @@ public class IslandManagerImpl implements IslandManager {
 
   private final Map<UUID, UUID> pendingInvites = new HashMap<>(); // 被邀请玩家 -> 岛屿ID
 
-  public IslandManagerImpl(AubadeCore plugin, IslandGrid grid, JdbcIslandRepository repository) {
-    this.plugin = plugin;
-    this.logger = plugin.getLogger();
+  public IslandManagerImpl(AubadeCore core, IslandGrid grid, JdbcIslandRepository repository) {
+    this.core = core;
+    this.logger = core.getLogger();
     this.cache = new IslandCache();
     this.grid = grid;
     this.factory = new IslandFactory(grid);
     this.repository = repository;
-    this.paster = new BlueprintPaster(plugin);
+    this.paster = new BlueprintPaster(core);
   }
 
   @Override
@@ -55,7 +55,7 @@ public class IslandManagerImpl implements IslandManager {
       return null;
     }
 
-    var addonManager = plugin.getLifecycleManager().getAddonLifecycleManager();
+    var addonManager = core.getLifecycleManager().getAddonLifecycleManager();
     GameModeAddon gameMode = addonManager != null ? addonManager.getGameMode(gameModeId) : null;
     if (gameMode == null) {
       player.sendMessage("\u00a7c当前默认游戏模式未注册，请联系管理员。");
@@ -67,9 +67,9 @@ public class IslandManagerImpl implements IslandManager {
     }
 
     // 获取或创建游戏世界
-    org.bukkit.World world = plugin.getServer().getWorld("aubade_skyblock");
+    org.bukkit.World world = core.getServer().getWorld("aubade_skyblock");
     if (world == null) {
-      world = plugin.getServer().getWorlds().get(0);
+      world = core.getServer().getWorlds().get(0);
     }
 
     Island island = factory.create(owner, world, gameMode);
@@ -87,9 +87,9 @@ public class IslandManagerImpl implements IslandManager {
     cache.put(island);
     repository.save(island);
 
-    var skyPlayer = plugin.getPlayerManager().getPlayer(player);
+    var skyPlayer = core.getPlayerManager().getPlayer(player);
     skyPlayer.setIslandId(island.getUniqueId());
-    plugin.getPlayerManager().savePlayer(skyPlayer);
+    core.getPlayerManager().savePlayer(skyPlayer);
 
     logger.info("[岛屿] 玩家 " + player.getName() + " 使用蓝图 [" + blueprint.getId() + "] 创建了新岛屿: " + island.getUniqueId());
     return island;
@@ -115,7 +115,7 @@ public class IslandManagerImpl implements IslandManager {
   }
 
   private xuanmo.aubade.core.blueprint.Blueprint resolveBlueprint(String blueprintId) {
-    var addon = plugin.getLifecycleManager().getAddonLifecycleManager().getExtension("blueprint_generator");
+    var addon = core.getLifecycleManager().getAddonLifecycleManager().getExtension("blueprint_generator");
     if (addon instanceof xuanmo.aubade.core.features.blueprint.BlueprintGeneratorAddon gen) {
       var registry = gen.getRegistry();
       if (registry != null && registry.hasBlueprint(blueprintId)) {
@@ -186,7 +186,7 @@ public class IslandManagerImpl implements IslandManager {
   @Override
   public boolean invitePlayer(Island island, Player player) {
     pendingInvites.put(player.getUniqueId(), island.getUniqueId());
-    String ownerName = plugin.getServer().getOfflinePlayer(island.getOwner()).getName();
+    String ownerName = core.getServer().getOfflinePlayer(island.getOwner()).getName();
     if (ownerName == null) {
       ownerName = "岛主";
     }

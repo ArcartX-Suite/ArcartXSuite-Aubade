@@ -18,8 +18,8 @@ public class WarpsAddon extends AbstractFeatureAddon {
 
   private final Map<UUID, List<Warp>> islandWarps = new HashMap<>();
 
-  public WarpsAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("warps")
+  public WarpsAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("warps")
         .name("传送牌")
         .version("1.0.0")
         .mainClass(WarpsAddon.class.getName())
@@ -40,13 +40,13 @@ public class WarpsAddon extends AbstractFeatureAddon {
   public void onEnable() {
     super.onEnable();
     registerUi("warp_board.yml", "warp_board");
-    plugin.getLogger().info("[Warps] 传送牌组件已启用。");
+    core.getLogger().info("[Warps] 传送牌组件已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
-    plugin.getLogger().info("[Warps] 传送牌组件已禁用。");
+    core.getLogger().info("[Warps] 传送牌组件已禁用。");
   }
 
   public List<Warp> getWarps(UUID islandId) {
@@ -79,10 +79,10 @@ public class WarpsAddon extends AbstractFeatureAddon {
   }
 
   private void registerUi(String fileName, String uiId) {
-    File uiDir = new File(plugin.getDataFolder(), "arcartx/ui");
+    File uiDir = new File(core.getDataFolder(), "arcartx/ui");
     File uiFile = new File(uiDir, fileName);
     if (!uiFile.exists()) {
-      plugin.saveResource("arcartx/ui/" + fileName, false);
+      core.saveResource("arcartx/ui/" + fileName, false);
     }
     getUiManager().registerUi(uiId, uiId, uiFile);
   }

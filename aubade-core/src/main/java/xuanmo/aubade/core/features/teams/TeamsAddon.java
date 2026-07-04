@@ -11,8 +11,8 @@ import xuanmo.aubade.core.features.AbstractFeatureAddon;
  */
 public class TeamsAddon extends AbstractFeatureAddon {
 
-  public TeamsAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("teams")
+  public TeamsAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("teams")
         .name("团队管理")
         .version("1.0.0")
         .mainClass(TeamsAddon.class.getName())
@@ -39,20 +39,20 @@ public class TeamsAddon extends AbstractFeatureAddon {
     super.onEnable();
     registerUi("member_manage.yml", "member_manage");
     registerUi("team_settings.yml", "team_settings");
-    plugin.getLogger().info("[Teams] 团队管理组件已启用。");
+    core.getLogger().info("[Teams] 团队管理组件已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
-    plugin.getLogger().info("[Teams] 团队管理组件已禁用。");
+    core.getLogger().info("[Teams] 团队管理组件已禁用。");
   }
 
   private void registerUi(String fileName, String uiId) {
-    File uiDir = new File(plugin.getDataFolder(), "arcartx/ui");
+    File uiDir = new File(core.getDataFolder(), "arcartx/ui");
     File uiFile = new File(uiDir, fileName);
     if (!uiFile.exists()) {
-      plugin.saveResource("arcartx/ui/" + fileName, false);
+      core.saveResource("arcartx/ui/" + fileName, false);
     }
     getUiManager().registerUi(uiId, uiId, uiFile);
   }

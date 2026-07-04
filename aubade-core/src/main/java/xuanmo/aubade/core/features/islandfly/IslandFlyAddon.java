@@ -20,8 +20,8 @@ public class IslandFlyAddon extends AbstractExtensionAddon implements Listener {
 
   private boolean enabledByDefault = true;
 
-  public IslandFlyAddon(AubadeCore plugin) {
-    super(plugin, AddonDescriptor.builder("island_fly")
+  public IslandFlyAddon(AubadeCore core) {
+    super(core, AddonDescriptor.builder("island_fly")
         .name("岛屿飞行")
         .version("1.0.0")
         .mainClass(IslandFlyAddon.class.getName())
@@ -42,14 +42,14 @@ public class IslandFlyAddon extends AbstractExtensionAddon implements Listener {
   public void onEnable() {
     super.onEnable();
     Bukkit.getPluginManager().registerEvents(this, javaPlugin());
-    plugin.getLogger().info("[IslandFly] 岛屿飞行扩展已启用。");
+    core.getLogger().info("[IslandFly] 岛屿飞行扩展已启用。");
   }
 
   @Override
   public void onDisable() {
     super.onDisable();
     PlayerMoveEvent.getHandlerList().unregister(this);
-    plugin.getLogger().info("[IslandFly] 岛屿飞行扩展已禁用。");
+    core.getLogger().info("[IslandFly] 岛屿飞行扩展已禁用。");
   }
 
   @EventHandler

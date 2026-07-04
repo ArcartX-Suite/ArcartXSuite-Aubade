@@ -17,11 +17,11 @@ import xuanmo.aubade.core.warp.IslandWarpHelper;
  */
 public class IslandDelWarpCommand extends CompositeCommand {
 
-  private final AubadeCore plugin;
+  private final AubadeCore core;
 
-  public IslandDelWarpCommand(AubadeCore plugin) {
+  public IslandDelWarpCommand(AubadeCore core) {
     super("delwarp", "删除岛屿传送点", Permission.PLAYER_WARP, true);
-    this.plugin = plugin;
+    this.core = core;
   }
 
   @Override
@@ -35,7 +35,7 @@ public class IslandDelWarpCommand extends CompositeCommand {
       return true;
     }
     Player player = (Player) sender;
-    var manager = plugin.getLifecycleManager().getIslandManager();
+    var manager = core.getLifecycleManager().getIslandManager();
     Optional<Island> opt = manager.getIslandByOwner(player.getUniqueId());
     if (opt.isEmpty()) {
       player.sendMessage("§c你还没有岛屿。");
@@ -60,7 +60,7 @@ public class IslandDelWarpCommand extends CompositeCommand {
   public List<String> tabComplete(CommandSender sender, String[] args) {
     if (!(sender instanceof Player)) return List.of();
     if (args.length == 0) {
-      var manager = plugin.getLifecycleManager().getIslandManager();
+      var manager = core.getLifecycleManager().getIslandManager();
       var opt = manager.getIslandByOwner(((Player) sender).getUniqueId());
       if (opt.isEmpty()) return List.of();
       return new java.util.ArrayList<>(IslandWarpHelper.getWarps(opt.get()).keySet());
