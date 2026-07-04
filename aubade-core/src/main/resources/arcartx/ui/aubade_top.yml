@@ -1,0 +1,101 @@
+# Aubade 排行榜
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.category = packet['category']
+      var.topList = packet['top']
+    update: |-
+      var.category = packet['category']
+      var.topList = packet['top']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 400
+      height: 500
+      x: 100
+      y: 50
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 200
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&6&l岛屿排行'
+
+  排名列表:
+    val: 排名列表
+    type: VStack
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 80
+      width: 360
+      height: 380
+      spaceBetween: 4
+    children:
+      排名项:
+        type: Texture
+        attribute:
+          entry: var.topList[self.key]
+          visible: self.entry != null
+          width: 360
+          height: 40
+          normal: ~50,50,60,200
+        children:
+          排名:
+            type: Text
+            attribute:
+              x: 10
+              y: 6
+              fontSize: 28
+              texts: "~&e#{self.parent.entry['rank']}"
+          岛名:
+            type: Text
+            attribute:
+              x: 60
+              y: 6
+              fontSize: 28
+              texts: "~&f{self.parent.entry['name']}"
+          分数:
+            type: Text
+            attribute:
+              x: 280
+              y: 6
+              fontSize: 28
+              texts: "~&6{self.parent.entry['score']}"
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 140
+      y: 470
+      width: 120
+      height: 40
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('aubade_top')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 8
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

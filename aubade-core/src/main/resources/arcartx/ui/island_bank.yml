@@ -1,0 +1,127 @@
+# 岛屿银行面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.balance = packet['balance']
+      var.interestRate = packet['interestRate']
+    update: |-
+      var.balance = packet['balance']
+      var.interestRate = packet['interestRate']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 360
+      height: 320
+      x: 100
+      y: 100
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 180
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&6&l岛屿银行'
+
+  余额显示:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 180
+      y: 80
+      center: true
+      fontSize: 36
+      texts: "~&f余额: &e{var.balance}"
+
+  利率显示:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 180
+      y: 120
+      center: true
+      fontSize: 24
+      texts: "~&7利率: {var.interestRate}%"
+
+  存入按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 160
+      width: 120
+      height: 48
+      normal: ~60,150,60,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_BANK_DEPOSIT')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 10
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&a存入'
+
+  取出按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 200
+      y: 160
+      width: 120
+      height: 48
+      normal: ~200,150,60,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_BANK_WITHDRAW')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 10
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&e取出'
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 120
+      y: 240
+      width: 120
+      height: 40
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('island_bank')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 8
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

@@ -1,0 +1,113 @@
+# Aubade 管理面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.worlds = packet['worlds']
+      var.players = packet['players']
+      var.islands = packet['islands']
+    update: |-
+      var.worlds = packet['worlds']
+      var.players = packet['players']
+      var.islands = packet['islands']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 600
+      height: 500
+      x: 100
+      y: 50
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 300
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&b&l岛屿管理'
+
+  世界列表:
+    val: 世界列表
+    type: VStack
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 80
+      width: 560
+      height: 380
+      spaceBetween: 4
+    children:
+      世界项:
+        type: Texture
+        attribute:
+          entry: var.worlds[self.key]
+          visible: self.entry != null
+          width: 560
+          height: 36
+          normal: ~50,50,60,200
+        children:
+          世界名:
+            type: Text
+            attribute:
+              x: 10
+              y: 6
+              fontSize: 28
+              texts: "~&f{self.parent.entry['name']}"
+
+  刷新按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 470
+      width: 120
+      height: 40
+      normal: ~60,60,70,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_ADMIN', 'refresh')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 8
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f刷新'
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 460
+      y: 470
+      width: 120
+      height: 40
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('aubade_admin')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 8
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

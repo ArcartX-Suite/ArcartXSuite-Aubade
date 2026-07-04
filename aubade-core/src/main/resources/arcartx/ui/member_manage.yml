@@ -1,0 +1,150 @@
+# 成员管理面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.members = packet['members']
+      var.canInvite = packet['canInvite']
+    update: |-
+      var.members = packet['members']
+      var.canInvite = packet['canInvite']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 460
+      height: 500
+      x: 100
+      y: 50
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 230
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&b&l成员管理'
+
+  成员列表:
+    val: 成员列表
+    type: VStack
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 80
+      width: 420
+      height: 340
+      spaceBetween: 4
+    children:
+      成员项:
+        type: Texture
+        attribute:
+          entry: var.members[self.key]
+          visible: self.entry != null
+          width: 420
+          height: 40
+          normal: ~50,50,60,200
+        children:
+          头像区:
+            type: Texture
+            attribute:
+              x: 4
+              y: 4
+              width: 32
+              height: 32
+              normal: ~60,60,70,220
+              radius: 16
+          名字:
+            type: Text
+            attribute:
+              x: 44
+              y: 4
+              fontSize: 28
+              texts: "~&f{self.parent.entry['name']}"
+          角色:
+            type: Text
+            attribute:
+              x: 44
+              y: 22
+              fontSize: 22
+              texts: "~&7{self.parent.entry['role']}"
+          踢出按钮:
+            type: Texture
+            attribute:
+              x: 370
+              y: 6
+              width: 44
+              height: 28
+              normal: ~200,60,60,220
+              radius: 4
+            action:
+              click: |-
+                Packet.send('SKYDREAM_TEAM_KICK', 'target', self.parent.entry['uuid'])
+            children:
+              踢出文字:
+                type: Text
+                attribute:
+                  x: 22
+                  y: 4
+                  through: true
+                  center: true
+                  fontSize: 22
+                  texts: '~&c踢出'
+
+  邀请按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 430
+      width: 420
+      height: 44
+      normal: ~60,150,60,220
+      radius: 6
+      visible: var.canInvite
+    action:
+      click: |-
+        Packet.send('SKYDREAM_TEAM_INVITE_OPEN')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 210
+          y: 10
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&f+ 邀请玩家'
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 170
+      y: 480
+      width: 120
+      height: 36
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('member_manage')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 6
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

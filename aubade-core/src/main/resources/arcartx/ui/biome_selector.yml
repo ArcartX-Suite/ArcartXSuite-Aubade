@@ -1,0 +1,105 @@
+# 生物群系选择面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.biomes = packet['biomes']
+      var.currentBiome = packet['currentBiome']
+    update: |-
+      var.biomes = packet['biomes']
+      var.currentBiome = packet['currentBiome']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 500
+      height: 480
+      x: 100
+      y: 60
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 250
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&a&l选择生物群系'
+
+  当前:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 250
+      y: 70
+      center: true
+      fontSize: 28
+      texts: "~&7当前: &f{var.currentBiome}"
+
+  生物群系网格:
+    val: 生物群系网格
+    type: HGrid
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 110
+      width: 460
+      height: 340
+      column: 4
+      spaceBetweenX: 8
+      spaceBetweenY: 8
+    children:
+      生物群系卡片:
+        type: Texture
+        attribute:
+          entry: var.biomes[self.key]
+          visible: self.entry != null
+          width: 108
+          height: 60
+          normal: ~50,50,60,200
+          radius: 6
+        action:
+          click: |-
+            Packet.send('SKYDREAM_BIOME_CHANGE', 'biome', self.entry)
+        children:
+          名称:
+            type: Text
+            attribute:
+              x: 54
+              y: 16
+              through: true
+              center: true
+              fontSize: 24
+              texts: "~&f{self.parent.entry}"
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 190
+      y: 460
+      width: 120
+      height: 36
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('biome_selector')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 6
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

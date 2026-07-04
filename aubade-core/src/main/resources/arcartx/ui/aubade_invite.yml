@@ -1,0 +1,97 @@
+# Aubade 邀请确认面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.inviterName = packet['inviterName']
+      var.islandName = packet['islandName']
+      var.expires = packet['expires']
+    update: |-
+      var.inviterName = packet['inviterName']
+      var.islandName = packet['islandName']
+      var.expires = packet['expires']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 360
+      height: 240
+      x: 100
+      y: 100
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 180
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&b&l岛屿邀请'
+
+  邀请信息:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 180
+      y: 80
+      center: true
+      fontSize: 28
+      texts: "~&f{var.inviterName} &7邀请你加入\n~&e{var.islandName}"
+
+  接受按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 160
+      width: 120
+      height: 48
+      normal: ~60,150,60,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_ISLAND_INVITE_ACCEPT')
+        Screen.close('aubade_invite')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 10
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&a接受'
+
+  拒绝按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 200
+      y: 160
+      width: 120
+      height: 48
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_ISLAND_INVITE_REJECT')
+        Screen.close('aubade_invite')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 10
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&c拒绝'

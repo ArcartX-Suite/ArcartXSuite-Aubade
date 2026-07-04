@@ -1,0 +1,62 @@
+name: Bug 报告
+about: 报告 Aubade 插件的问题
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！请尽量填写以下信息，方便我们定位问题。
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 简洁地描述你遇到的 Bug
+      placeholder: 例如：玩家创建岛屿后无法传送回家
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 如何一步步复现这个问题
+      placeholder: |
+        1. 执行 /island create
+        2. 执行 /island home
+        3. 看到错误提示...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为
+      description: 你期望发生什么
+      placeholder: 例如：玩家应该被传送到岛屿中心
+
+  - type: input
+    id: version
+    attributes:
+      label: 插件版本
+      description: 执行 /version Aubade 查看
+      placeholder: 例如：1.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: server
+    attributes:
+      label: 服务端版本
+      description: 执行 /version 查看
+      placeholder: 例如：Paper 1.20.4 build #496
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 相关日志
+      description: 如有报错请贴出关键日志片段
+      render: shell

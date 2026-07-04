@@ -1,0 +1,59 @@
+# 岛屿等级 HUD 显示
+ui:
+  isHud: true
+  hide: false
+  through: true
+  closeDied: false
+  packetHandler:
+    init: |-
+      var.level = packet['level']
+      var.nextLevel = packet['nextLevel']
+      var.progress = packet['progress']
+    update: |-
+      var.level = packet['level']
+      var.nextLevel = packet['nextLevel']
+      var.progress = packet['progress']
+
+controls:
+  等级面板:
+    type: Texture
+    attribute:
+      width: 200
+      height: 40
+      x: 20
+      y: 20
+      normal: ~30,30,40,180
+      radius: 6
+      stroke: 1
+      color: ~80,180,255,120
+
+  等级数字:
+    type: Text
+    parent: 等级面板
+    attribute:
+      x: 10
+      y: 8
+      fontSize: 36
+      texts: "~&b&lLv.{var.level}"
+
+  进度条背景:
+    type: Texture
+    parent: 等级面板
+    attribute:
+      x: 80
+      y: 14
+      width: 110
+      height: 12
+      normal: ~20,20,30,200
+      radius: 6
+
+  进度条填充:
+    type: Texture
+    parent: 等级面板
+    attribute:
+      x: 80
+      y: 14
+      width: "var.progress * 110"
+      height: 12
+      normal: ~80,200,120,220
+      radius: 6

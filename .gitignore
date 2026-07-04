@@ -1,0 +1,23 @@
+.gradle/
+build/
+out/
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+!libs/*.jar
+*.war
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+run/
+server/
+
+# 不提交 native 库（由 CI 构建）
+*.dll
+*.so

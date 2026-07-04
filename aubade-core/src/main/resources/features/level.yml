@@ -1,0 +1,48 @@
+# 岛屿等级 — 方块价值表
+# 格式: <minecraft:material_key>: <分值>
+# 支持通配符: minecraft:*_ore
+
+block-values:
+  minecraft:stone: 1
+  minecraft:dirt: 1
+  minecraft:grass_block: 1
+  minecraft:cobblestone: 1
+  minecraft:oak_log: 2
+  minecraft:spruce_log: 2
+  minecraft:birch_log: 2
+  minecraft:jungle_log: 2
+  minecraft:acacia_log: 2
+  minecraft:dark_oak_log: 2
+  minecraft:mangrove_log: 2
+  minecraft:cherry_log: 2
+  minecraft:sand: 1
+  minecraft:gravel: 1
+  minecraft:coal_ore: 10
+  minecraft:iron_ore: 20
+  minecraft:copper_ore: 15
+  minecraft:gold_ore: 50
+  minecraft:lapis_ore: 30
+  minecraft:redstone_ore: 20
+  minecraft:diamond_ore: 100
+  minecraft:emerald_ore: 80
+  minecraft:deepslate: 1
+  minecraft:tuff: 1
+  minecraft:calcite: 1
+  minecraft:dripstone_block: 2
+  minecraft:amethyst_block: 30
+  minecraft:obsidian: 10
+  minecraft:crying_obsidian: 15
+  minecraft:glowstone: 15
+  minecraft:netherite_block: 5000
+  minecraft:ancient_debris: 2000
+  minecraft:emerald_block: 800
+  minecraft:diamond_block: 900
+  minecraft:beacon: 1000
+  minecraft:enchanting_table: 500
+  minecraft:end_portal_frame: 1000
+  minecraft:dragon_egg: 5000
+  minecraft:spawner: 2000
+  # 下界合金装备相关
+  minecraft:netherite_ingot: 500
+  # 通配符示例：所有矿石
+  minecraft:*_ore: 10

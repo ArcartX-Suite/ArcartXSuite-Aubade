@@ -1,0 +1,101 @@
+# Aubade 创建岛屿 — 蓝图选择
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.blueprints = packet['blueprints']
+    update: |-
+      var.blueprints = packet['blueprints']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 500
+      height: 400
+      x: 100
+      y: 100
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 250
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&b&l选择蓝图'
+
+  蓝图网格:
+    val: 蓝图网格
+    type: HGrid
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 80
+      width: 460
+      height: 260
+      column: 3
+      spaceBetweenX: 10
+      spaceBetweenY: 10
+    children:
+      蓝图项:
+        type: Texture
+        attribute:
+          entry: var.blueprints[self.key]
+          visible: self.entry != null
+          width: 140
+          height: 120
+          normal: ~50,50,60,200
+          radius: 6
+        action:
+          click: |-
+            Packet.send('SKYDREAM_ISLAND_CREATE', 'blueprintId', self.entry['id'])
+            Screen.close('aubade_create')
+        children:
+          蓝图名:
+            type: Text
+            attribute:
+              x: 70
+              y: 10
+              center: true
+              fontSize: 28
+              texts: "~&f{self.parent.entry['name']}"
+          蓝图描述:
+            type: Text
+            attribute:
+              x: 70
+              y: 70
+              center: true
+              fontSize: 22
+              texts: "~&7{self.parent.entry['description']}"
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 190
+      y: 350
+      width: 120
+      height: 40
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('aubade_create')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 8
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f取消'

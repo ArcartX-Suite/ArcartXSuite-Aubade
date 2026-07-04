@@ -1,0 +1,153 @@
+# 岛屿边界设置面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.currentSize = packet['currentSize']
+      var.maxSize = packet['maxSize']
+      var.showBorder = packet['showBorder']
+    update: |-
+      var.currentSize = packet['currentSize']
+      var.maxSize = packet['maxSize']
+      var.showBorder = packet['showBorder']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 420
+      height: 380
+      x: 100
+      y: 100
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 210
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&b&l岛屿边界'
+
+  当前大小:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 210
+      y: 80
+      center: true
+      fontSize: 32
+      texts: "~&f当前半径: &e{var.currentSize}"
+
+  最大值:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 210
+      y: 120
+      center: true
+      fontSize: 24
+      texts: "~&7上限: {var.maxSize}"
+
+  缩小按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 160
+      width: 100
+      height: 48
+      normal: ~200,100,60,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_BORDER_SHRINK')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 50
+          y: 10
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&f-1'
+
+  扩大按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 280
+      y: 160
+      width: 100
+      height: 48
+      normal: ~60,150,60,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_BORDER_EXPAND')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 50
+          y: 10
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&f+1'
+
+  显示开关:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 240
+      width: 340
+      height: 44
+      normal: ~50,50,60,200
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_BORDER_TOGGLE')
+    children:
+      开关文字:
+        type: Text
+        attribute:
+          x: 170
+          y: 10
+          through: true
+          center: true
+          fontSize: 32
+          texts: "~{var.showBorder ? '&a显示边界' : '&c隐藏边界'}"
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 150
+      y: 310
+      width: 120
+      height: 36
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('border_settings')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 6
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

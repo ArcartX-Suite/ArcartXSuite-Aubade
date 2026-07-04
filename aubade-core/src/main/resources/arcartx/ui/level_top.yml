@@ -1,0 +1,113 @@
+# 岛屿等级排行榜
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.topList = packet['top']
+      var.myRank = packet['myRank']
+      var.myLevel = packet['myLevel']
+    update: |-
+      var.topList = packet['top']
+      var.myRank = packet['myRank']
+      var.myLevel = packet['myLevel']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 420
+      height: 500
+      x: 100
+      y: 50
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 210
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&6&l岛屿等级排行'
+
+  排名列表:
+    val: 排名列表
+    type: VStack
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 80
+      width: 380
+      height: 350
+      spaceBetween: 4
+    children:
+      排名项:
+        type: Texture
+        attribute:
+          entry: var.topList[self.key]
+          visible: self.entry != null
+          width: 380
+          height: 36
+          normal: ~50,50,60,200
+        children:
+          排名:
+            type: Text
+            attribute:
+              x: 10
+              y: 4
+              fontSize: 28
+              texts: "~&e#{self.parent.entry['rank']}"
+          岛名:
+            type: Text
+            attribute:
+              x: 50
+              y: 4
+              fontSize: 28
+              texts: "~&f{self.parent.entry['name']}"
+          等级:
+            type: Text
+            attribute:
+              x: 300
+              y: 4
+              fontSize: 28
+              texts: "~&b{self.parent.entry['level']}"
+
+  我的排名:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 210
+      y: 440
+      center: true
+      fontSize: 28
+      texts: "~&7我的排名: &e#{var.myRank} &7| 等级: &b{var.myLevel}"
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 150
+      y: 470
+      width: 120
+      height: 36
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('level_top')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 6
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

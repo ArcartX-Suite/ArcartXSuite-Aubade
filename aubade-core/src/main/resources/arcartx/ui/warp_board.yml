@@ -1,0 +1,119 @@
+# 传送牌面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.warps = packet['warps']
+    update: |-
+      var.warps = packet['warps']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 420
+      height: 460
+      x: 100
+      y: 70
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 210
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&b&l传送牌'
+
+  传送列表:
+    val: 传送列表
+    type: VStack
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 80
+      width: 380
+      height: 320
+      spaceBetween: 4
+    children:
+      传送项:
+        type: Texture
+        attribute:
+          entry: var.warps[self.key]
+          visible: self.entry != null
+          width: 380
+          height: 44
+          normal: ~50,50,60,200
+        action:
+          click: |-
+            Packet.send('SKYDREAM_WARP_TELEPORT', 'name', self.entry['name'])
+        children:
+          传送名:
+            type: Text
+            attribute:
+              x: 10
+              y: 8
+              fontSize: 28
+              texts: "~&f{self.parent.entry['displayName']}"
+          公共标签:
+            type: Text
+            attribute:
+              x: 300
+              y: 10
+              fontSize: 22
+              texts: "~&7{self.parent.entry['public'] ? '公共' : '私有'}"
+
+  创建按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 410
+      width: 160
+      height: 40
+      normal: ~60,150,60,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_WARP_CREATE')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 80
+          y: 8
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f+ 创建'
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 240
+      y: 410
+      width: 120
+      height: 40
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('warp_board')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 8
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

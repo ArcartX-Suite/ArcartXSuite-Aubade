@@ -1,0 +1,34 @@
+# Aubade 核心配置
+# 所有注释均为中文，方便服主理解
+
+# 常规设置
+general:
+  # 默认游戏模式（玩家首次创建岛屿时使用的模式）
+  default-gamemode: skyblock
+  # 每位玩家最多拥有的岛屿数量
+  max-islands-per-player: 1
+  # 调试模式（开启后会输出更多日志）
+  debug: false
+
+# 数据库存储配置
+storage:
+  # 存储类型：sqlite 或 mysql
+  type: sqlite
+  # MySQL 配置（仅在 type 为 mysql 时生效）
+  mysql:
+    host: localhost
+    port: 3306
+    database: aubade
+    username: root
+    password: ""
+
+# 世界设置
+world:
+  # 岛屿中心到下一个岛屿的间距（格）
+  island-spacing: 200
+  # 默认保护范围（半径）
+  default-protection-range: 50
+  # 最大岛屿范围（半径）
+  max-range: 200
+  # 海平面高度
+  sea-level: 0

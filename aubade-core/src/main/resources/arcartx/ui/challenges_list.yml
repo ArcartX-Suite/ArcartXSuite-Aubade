@@ -1,0 +1,108 @@
+# 挑战列表面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.challenges = packet['challenges']
+    update: |-
+      var.challenges = packet['challenges']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 520
+      height: 500
+      x: 100
+      y: 50
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 260
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&6&l挑战列表'
+
+  挑战网格:
+    val: 挑战网格
+    type: HGrid
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 80
+      width: 480
+      height: 380
+      column: 3
+      spaceBetweenX: 10
+      spaceBetweenY: 10
+    children:
+      挑战卡片:
+        type: Texture
+        attribute:
+          entry: var.challenges[self.key]
+          visible: self.entry != null
+          width: 150
+          height: 120
+          normal: ~50,50,60,200
+          radius: 6
+        action:
+          click: |-
+            Packet.send('SKYDREAM_CHALLENGE_DETAIL', 'id', self.entry['id'])
+        children:
+          挑战名:
+            type: Text
+            attribute:
+              x: 75
+              y: 10
+              center: true
+              fontSize: 28
+              texts: "~&f{self.parent.entry['name']}"
+          进度:
+            type: Text
+            attribute:
+              x: 75
+              y: 70
+              center: true
+              fontSize: 22
+              texts: "~&7{self.parent.entry['progress']}/{self.parent.entry['target']}"
+          状态标签:
+            type: Text
+            attribute:
+              x: 75
+              y: 95
+              center: true
+              fontSize: 20
+              texts: "~{self.parent.entry['statusColor']}{self.parent.entry['status']}"
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 200
+      y: 470
+      width: 120
+      height: 36
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('challenges_list')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 6
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

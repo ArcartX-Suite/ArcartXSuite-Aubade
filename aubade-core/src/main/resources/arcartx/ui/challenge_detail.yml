@@ -1,0 +1,133 @@
+# 挑战详情面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.challenge = packet['challenge']
+    update: |-
+      var.challenge = packet['challenge']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 400
+      height: 400
+      x: 100
+      y: 100
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 200
+      y: 20
+      center: true
+      fontSize: 49
+      texts: "~&6&l{var.challenge['name']}"
+
+  描述:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 200
+      y: 80
+      center: true
+      fontSize: 28
+      texts: "~&7{var.challenge['description']}"
+
+  需求列表:
+    val: 需求列表
+    type: VStack
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 120
+      width: 320
+      height: 120
+      spaceBetween: 4
+    children:
+      需求项:
+        type: Text
+        attribute:
+          entry: var.challenge['requirements'][self.key]
+          visible: self.entry != null
+          x: 0
+          y: 0
+          fontSize: 24
+          texts: "~&f{self.entry}"
+
+  奖励列表:
+    val: 奖励列表
+    type: VStack
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 250
+      width: 320
+      height: 80
+      spaceBetween: 4
+    children:
+      奖励项:
+        type: Text
+        attribute:
+          entry: var.challenge['rewards'][self.key]
+          visible: self.entry != null
+          x: 0
+          y: 0
+          fontSize: 24
+          texts: "~&e{self.entry}"
+
+  领取按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 120
+      y: 340
+      width: 160
+      height: 44
+      normal: ~60,150,60,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_CHALLENGE_CLAIM', 'id', var.challenge['id'])
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 80
+          y: 10
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&a领取奖励'
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 140
+      y: 390
+      width: 120
+      height: 36
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('challenge_detail')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 6
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

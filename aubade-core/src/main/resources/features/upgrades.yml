@@ -1,0 +1,15 @@
+# 岛屿升级配置
+
+protection_range:
+  max-level: 10
+  base-cost: 5000
+  cost-multiplier: 2.0
+  base-value: 50
+  value-increment: 10
+
+member_limit:
+  max-level: 5
+  base-cost: 3000
+  cost-multiplier: 1.8
+  base-value: 5
+  value-increment: 3

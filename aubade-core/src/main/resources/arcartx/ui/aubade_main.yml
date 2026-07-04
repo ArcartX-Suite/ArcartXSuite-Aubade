@@ -1,0 +1,160 @@
+# Aubade 玩家主菜单
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.island = packet['island']
+      var.canCreate = packet['canCreate']
+      var.top3 = packet['top3']
+    update: |-
+      var.island = packet['island']
+      var.canCreate = packet['canCreate']
+      var.top3 = packet['top3']
+  action:
+    open: |-
+      Packet.send('SKYDREAM_MAIN', 'open')
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 320
+      height: 400
+      x: 100
+      y: 100
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 160
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&b&l空岛菜单'
+
+  我的岛屿按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 80
+      width: 240
+      height: 48
+      normal: ~60,60,70,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_ISLAND_HOME')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 120
+          y: 12
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&f我的岛屿'
+
+  创建岛屿按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 140
+      width: 240
+      height: 48
+      normal: ~60,60,70,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_ISLAND_CREATE')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 120
+          y: 12
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&f创建岛屿'
+
+  排行榜按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 200
+      width: 240
+      height: 48
+      normal: ~60,60,70,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_TOP', 'open')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 120
+          y: 12
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&f排行榜'
+
+  设置按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 260
+      width: 240
+      height: 48
+      normal: ~60,60,70,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_SETTINGS', 'open')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 120
+          y: 12
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&f设置'
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 320
+      width: 240
+      height: 48
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('aubade_main')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 120
+          y: 12
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&f关闭'

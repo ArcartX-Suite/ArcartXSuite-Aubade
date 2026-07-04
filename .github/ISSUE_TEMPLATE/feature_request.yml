@@ -1,0 +1,27 @@
+name: 功能建议
+about: 为 Aubade 提出新功能或改进建议
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 功能描述
+      description: 你想实现什么功能
+      placeholder: 例如：希望增加岛屿合并功能
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: 使用场景
+      description: 这个功能在什么场景下有用
+      placeholder: 例如：两个好友的岛屿相邻，希望合并成一个更大的岛屿
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 建议实现方案
+      description: 如果你有实现思路，请简要描述
+      placeholder: 可选

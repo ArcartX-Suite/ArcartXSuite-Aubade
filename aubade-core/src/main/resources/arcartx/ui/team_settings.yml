@@ -1,0 +1,105 @@
+# 团队设置面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.settings = packet['settings']
+    update: |-
+      var.settings = packet['settings']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 400
+      height: 420
+      x: 100
+      y: 80
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 200
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&b&l团队设置'
+
+  转让岛主按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 80
+      width: 320
+      height: 44
+      normal: ~200,150,60,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_TEAM_TRANSFER_OPEN')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 160
+          y: 10
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&f转让岛主'
+
+  修改名称按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 140
+      width: 320
+      height: 44
+      normal: ~60,60,70,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_TEAM_RENAME_OPEN')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 160
+          y: 10
+          through: true
+          center: true
+          fontSize: 36
+          texts: '~&f修改岛屿名称'
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 140
+      y: 360
+      width: 120
+      height: 36
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('team_settings')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 6
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

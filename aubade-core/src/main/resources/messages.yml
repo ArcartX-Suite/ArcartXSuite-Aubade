@@ -1,0 +1,40 @@
+# Aubade 消息配置
+# 支持 & 颜色代码，以及 {placeholder} 占位符
+
+# 通用
+prefix: "&6[Aubade] &r"
+success: "&a操作成功。"
+error: "&c操作失败：{reason}"
+no-permission: "&c你没有权限执行此操作。"
+player-only: "&c此命令只能由玩家执行。"
+
+# 岛屿相关
+island:
+  created: "&a你的岛屿已创建！使用 &e/island home &a返回。"
+  deleted: "&a岛屿已删除。"
+  create-failed: "&c创建岛屿失败，请联系管理员。"
+  no-island: "&c你还没有岛屿，使用 &e/island create &c创建一个。"
+  teleport-home: "&a正在返回你的岛屿..."
+  home-set: "&a岛屿出生点已设置。"
+  invite-sent: "&a已向 &e{player} &a发送岛屿邀请。"
+  invite-received: "&e{owner} &a邀请你加入他的岛屿，使用 &e/island accept &a接受。"
+  invite-accepted: "&a你已加入岛屿！"
+  invite-none: "&c你没有待处理的邀请。"
+  kicked: "&c你已被移出岛屿。"
+  kick-success: "&a已将 &e{player} &a移出岛屿。"
+  left: "&a你已离开岛屿。"
+  locked: "&a岛屿已上锁，访客无法进入。"
+  unlocked: "&a岛屿已解锁。"
+
+# 管理员
+admin:
+  reload-success: "&a插件重载完成。"
+  purge-start: "&a开始清理无效数据..."
+  purge-complete: "&a清理完成，共清理 &e{count} &a条记录。"
+  force-delete: "&a已强制删除 &e{player} &a的岛屿。"
+
+# 排行榜
+top:
+  header: "&6======== 岛屿排行榜 ========"
+  entry: "&e{rank}. &f{island} &7— &6{score}"
+  footer: "&6==========================="
