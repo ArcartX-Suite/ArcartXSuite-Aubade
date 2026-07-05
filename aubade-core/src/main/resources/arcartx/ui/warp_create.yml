@@ -1,0 +1,99 @@
+# 传送点创建面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 360
+      height: 220
+      x: 100
+      y: 100
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 180
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&b&l创建传送点'
+
+  提示:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 180
+      y: 74
+      center: true
+      fontSize: 24
+      texts: '~&7请输入传送点名称'
+
+  名称输入框:
+    type: TextBox
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 106
+      width: 280
+      height: 34
+      length: 32
+      emptyText: '~&7输入传送点名称'
+      canLoseFocus: true
+
+  确认按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 156
+      width: 120
+      height: 38
+      normal: ~60,150,60,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_WARP_CREATE_CONFIRM', 'name', self.parent['名称输入框'].getContent())
+        Screen.close('warp_create')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 7
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f确认'
+
+  取消按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 200
+      y: 156
+      width: 120
+      height: 38
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('warp_create')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 7
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f取消'

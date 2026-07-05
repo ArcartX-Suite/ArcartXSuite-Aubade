@@ -27,9 +27,13 @@ ArcartX-Aubade 已完成 AXS 模块化收口，当前主线是继续把各功能
 | 阶段 / 条目 | 状态 | 优先级 | 说明 |
 |---|---|---|---|
 | 阶段 2.20 集成测试 | 未完成 | P0 | 计划要求做创建→邀请→踢出→删除的链路验收；当前仓内没有可直接复用的测试基建，`gradlew.bat test` 仅为 `NO-SOURCE` |
-| 阶段 3.1~3.6 UI 统一管理与 packetBridge / UI YAML 收口 | 待继续对照计划验收 | P0~P1 | 计划里这一段是阶段 2 之后的下一组里程碑；仓内已有 UI 收口成果，但执行计划仍需逐项对齐确认 |
+| 阶段 3.1~3.6 UI 统一管理与 packetBridge / UI YAML 收口 | 已完成主线收口，少量入站动作待后续补齐 | P0~P1 | 已接线 `AdminUiPacketDispatcher`（admin 先于 island）；已把 main/create/invite/top，以及 warp/biome/member(info)/team(settings)/level 的无参入口接到对应 UI；本轮补齐主菜单「银行/边界」按钮及 `SKYDREAM_BANK/BORDER open`，并将 `BANK_DEPOSIT/WITHDRAW`、`BORDER_SHRINK/EXPAND/TOGGLE`、`TEAM_INVITE_OPEN` 接入现有 addon/UI；`TEAM_TRANSFER_OPEN`/`TEAM_RENAME_OPEN`/`WARP_CREATE` 仅保留明确中文提示，不束构后端；`gradlew.bat build` / `gradlew.bat test`（13 用例）均绿 |
 | 阶段 5.8 岛屿银行 / AXS warehouse 统一体系 | 计划中 / 未实施 | P1 | 目标是让“岛屿仓库 + 岛屿银行”统一由 AXS warehouse 提供存储与经济能力，Aubade 侧只做接入；当前 `UpgradesAddon` 已明确改为扣玩家个人 Vault 余额，岛屿银行暂不作为升级资金来源 |
-| 阶段 5.1~5.7 其余玩法联动、跨服同步、全模块联调 | 待后续推进 | P0~P1 | 包括 `InvSwitcher / IslandFly / Limits / Likes / Visit / VoidPortals / Greenhouses` 等后续玩法整合，以及 Redis / `IslandSyncPacket` / 全模块联调 |
+| 阶段 5 Redis 跨服同步 v1 | 已完成（AXS CrossServerAPI + invalidation-based） | P1 | 采用 AXS cross-server bus，消息仅携带 eventType/islandId/ownerId/sourceNodeId/timestamp；sync.enabled/channel 配置门控；save/delete 挂钩已接入；fake-bus MockBukkit 测试已覆盖。bank/border/level 若独立持久化则留作后续。 |
+
+- 后续待办：岛主转让。
+- 后续待办：岛屿改名。
+- 后续待办：warp 板内创建（名称输入 UI）。
 
 ## 已知约束 / 部署提醒
 - 当前代码以 AXS 模块形态组织，部署时需要重新构建模块 jar 再替换服务端。

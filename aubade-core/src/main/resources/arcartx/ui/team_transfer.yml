@@ -1,0 +1,125 @@
+# 岛主转让面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.members = packet['members']
+    update: |-
+      var.members = packet['members']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 460
+      height: 500
+      x: 100
+      y: 50
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 230
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&c&l岛主转让'
+
+  成员列表:
+    val: 成员列表
+    type: VStack
+    parent: 主面板
+    attribute:
+      x: 20
+      y: 80
+      width: 420
+      height: 340
+      spaceBetween: 4
+    children:
+      成员项:
+        type: Texture
+        attribute:
+          entry: var.members[self.key]
+          visible: self.entry != null
+          width: 420
+          height: 40
+          normal: ~50,50,60,200
+        children:
+          头像区:
+            type: Texture
+            attribute:
+              x: 4
+              y: 4
+              width: 32
+              height: 32
+              normal: ~60,60,70,220
+              radius: 16
+          名字:
+            type: Text
+            attribute:
+              x: 44
+              y: 4
+              fontSize: 28
+              texts: "~&f{self.parent.entry['name']}"
+          角色:
+            type: Text
+            attribute:
+              x: 44
+              y: 22
+              fontSize: 22
+              texts: "~&7{self.parent.entry['role']}"
+          转让按钮:
+            type: Texture
+            attribute:
+              x: 350
+              y: 6
+              width: 60
+              height: 28
+              normal: ~200,120,60,220
+              radius: 4
+              visible: self.parent.entry['role'] != 'OWNER'
+            action:
+              click: |-
+                Packet.send('SKYDREAM_TEAM_TRANSFER_CONFIRM', 'target', self.parent.entry['uuid'])
+                Screen.close('team_transfer')
+            children:
+              按钮文字:
+                type: Text
+                attribute:
+                  x: 30
+                  y: 4
+                  through: true
+                  center: true
+                  fontSize: 20
+                  texts: '~&f转让'
+
+  关闭按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 170
+      y: 460
+      width: 120
+      height: 36
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('team_transfer')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 6
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f关闭'

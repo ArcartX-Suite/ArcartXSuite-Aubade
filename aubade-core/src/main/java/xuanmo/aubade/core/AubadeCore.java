@@ -15,6 +15,7 @@ import xuanmo.aubade.core.lifecycle.AddonLifecycleManager;
 import xuanmo.aubade.core.lifecycle.CoreLifecycleManager;
 import xuanmo.aubade.core.player.PlayerManagerImpl;
 import xuanmo.aubade.core.storage.StorageManager;
+import xuanmo.aubade.core.sync.IslandSyncService;
 import xuanmo.aubade.core.ui.UiManager;
 import xuanmo.aubade.core.world.WorldManagerImpl;
 import xuanmo.arcartxsuite.api.bridge.PacketBridgeAPI;
@@ -38,6 +39,7 @@ public final class AubadeCore {
   private PlayerManagerImpl playerManager;
   private WorldManagerImpl worldManager;
   private UiManager uiManager;
+  private @Nullable IslandSyncService islandSyncService;
 
   public AubadeCore(JavaPlugin plugin, File dataFolder, ClassLoader resourceLoader, @Nullable PacketBridgeAPI packetBridge) {
     this.plugin = plugin;
@@ -144,6 +146,18 @@ public final class AubadeCore {
 
   public void uiManager(UiManager uiManager) {
     this.uiManager = uiManager;
+  }
+
+  public IslandSyncService islandSyncService() {
+    return islandSyncService;
+  }
+
+  public void islandSyncService(@Nullable IslandSyncService islandSyncService) {
+    this.islandSyncService = islandSyncService;
+  }
+
+  public @Nullable IslandSyncService getIslandSyncService() {
+    return islandSyncService();
   }
 
   public Logger getLogger() {

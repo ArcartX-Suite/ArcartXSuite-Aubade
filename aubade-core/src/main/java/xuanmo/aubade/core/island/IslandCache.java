@@ -62,6 +62,17 @@ public class IslandCache {
     }
   }
 
+  public void removeByOwner(UUID owner) {
+    Island island = byOwner.remove(owner);
+    if (island != null) {
+      byId.remove(island.getUniqueId());
+    }
+    l2ByOwner.remove(owner);
+    if (island != null) {
+      l2ById.remove(island.getUniqueId());
+    }
+  }
+
   public boolean contains(UUID id) {
     return byId.containsKey(id) || l2ById.containsKey(id);
   }
@@ -93,4 +104,3 @@ public class IslandCache {
     return l2ById.getMissCount();
   }
 }
-

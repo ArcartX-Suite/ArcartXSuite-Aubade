@@ -1,0 +1,104 @@
+# 岛屿改名面板
+ui:
+  hide: true
+  escClose: true
+  closeDied: true
+  packetHandler:
+    init: |-
+      var.currentName = packet['currentName']
+    update: |-
+      var.currentName = packet['currentName']
+
+controls:
+  主面板:
+    type: Texture
+    attribute:
+      width: 360
+      height: 240
+      x: 100
+      y: 100
+      normal: ~45,45,55,220
+      stroke: 2
+      color: ~80,180,255,180
+      radius: 8
+
+  标题:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 180
+      y: 20
+      center: true
+      fontSize: 49
+      texts: '~&b&l岛屿改名'
+
+  当前名称:
+    type: Text
+    parent: 主面板
+    attribute:
+      x: 180
+      y: 76
+      center: true
+      fontSize: 24
+      texts: "~&7当前名称：&f{var.currentName}"
+
+  名称输入框:
+    type: TextBox
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 110
+      width: 280
+      height: 34
+      length: 32
+      emptyText: '~&7请输入新的岛屿名称'
+      canLoseFocus: true
+
+  确认按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 40
+      y: 160
+      width: 120
+      height: 38
+      normal: ~60,150,60,220
+      radius: 6
+    action:
+      click: |-
+        Packet.send('SKYDREAM_TEAM_RENAME_CONFIRM', 'name', self.parent['名称输入框'].getContent())
+        Screen.close('island_rename')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 7
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f确认'
+
+  取消按钮:
+    type: Texture
+    parent: 主面板
+    attribute:
+      x: 200
+      y: 160
+      width: 120
+      height: 38
+      normal: ~200,60,60,220
+      radius: 6
+    action:
+      click: |-
+        Screen.close('island_rename')
+    children:
+      按钮文字:
+        type: Text
+        attribute:
+          x: 60
+          y: 7
+          through: true
+          center: true
+          fontSize: 28
+          texts: '~&f取消'

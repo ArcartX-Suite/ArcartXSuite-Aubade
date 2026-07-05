@@ -17,6 +17,8 @@ import xuanmo.aubade.core.AubadeCore;
 import xuanmo.aubade.core.blueprint.BlueprintPaster;
 import xuanmo.aubade.core.blueprint.BlueprintParser;
 import xuanmo.aubade.core.storage.JdbcIslandRepository;
+import xuanmo.aubade.core.sync.DisabledIslandSyncService;
+import xuanmo.aubade.core.sync.IslandSyncService;
 
 /**
  * 岛屿管理器实现。
@@ -30,6 +32,7 @@ public class IslandManagerImpl implements IslandManager {
   private final IslandFactory factory;
   private final JdbcIslandRepository repository;
   private final BlueprintPaster paster;
+  private IslandSyncService islandSyncService = DisabledIslandSyncService.INSTANCE;
 
   private final Map<UUID, UUID> pendingInvites = new HashMap<>(); // 被邀请玩家 -> 岛屿ID
 
@@ -131,6 +134,7 @@ public class IslandManagerImpl implements IslandManager {
     cache.remove(island.getUniqueId());
     repository.delete(island);
     logger.info("[岛屿] 岛屿已删除: " + island.getUniqueId());
+    islandSyncService.publishDelete(island.getUniqueId(), island.getOwner());
     return true;
   }
 
@@ -183,6 +187,71 @@ public class IslandManagerImpl implements IslandManager {
   public void saveIsland(Island island) {
     repository.save(island);
     grid.registerIsland(island);
+    islandSyncService.publishUpsert(island.getUniqueId(), island.getOwner());
+  }
+
+  public void setIslandSyncService(IslandSyncService islandSyncService) {
+    this.islandSyncService = islandSyncService != null ? islandSyncService : DisabledIslandSyncService.INSTANCE;
+  }
+
+  public void applyRemoteUpsert(UUID islandId, UUID ownerId) {
+    if (islandId == null) {
+      return;
+    }
+    invalidateRemoteIsland(islandId, ownerId);
+    repository.findById(islandId).ifPresent(island -> {
+      cache.put(island);
+      grid.registerIsland(island);
+    });
+  }
+
+  public void applyRemoteDelete(UUID islandId, UUID ownerId) {
+    if (islandId == null) {
+      return;
+    }
+    invalidateRemoteIsland(islandId, ownerId);
+  }
+
+  private void invalidateRemoteIsland(UUID islandId, UUID ownerId) {
+    cache.getById(islandId).ifPresent(grid::unregisterIsland);
+    cache.remove(islandId);
+    if (ownerId != null) {
+      cache.removeByOwner(ownerId);
+    }
+  }
+
+  public boolean transferIsland(Island island, UUID newOwner) {
+    if (island == null || newOwner == null) {
+      return false;
+    }
+    UUID oldOwner = island.getOwner();
+    if (oldOwner.equals(newOwner)) {
+      return false;
+    }
+    IslandMember member = island.getMembers().get(newOwner);
+    if (member == null || member.getRole() == Role.OWNER) {
+      return false;
+    }
+    cache.remove(island.getUniqueId());
+    island.getMembers().put(oldOwner, new IslandMember(oldOwner, Role.MEMBER));
+    island.getMembers().put(newOwner, new IslandMember(newOwner, Role.OWNER));
+    island.setOwner(newOwner);
+    saveIsland(island);
+    syncPlayerIslandId(oldOwner, island.getUniqueId());
+    syncPlayerIslandId(newOwner, island.getUniqueId());
+    cache.put(island);
+    return true;
+  }
+
+  private void syncPlayerIslandId(UUID playerId, UUID islandId) {
+    var playerManager = core.getPlayerManager();
+    if (playerManager == null) {
+      return;
+    }
+    playerManager.getPlayer(playerId).ifPresent(skyPlayer -> {
+      skyPlayer.setIslandId(islandId);
+      playerManager.savePlayer(skyPlayer);
+    });
   }
 
   @Override
@@ -263,4 +332,3 @@ public class IslandManagerImpl implements IslandManager {
     }
   }
 }
-

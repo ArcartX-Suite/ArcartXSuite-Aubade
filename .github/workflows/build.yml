@@ -33,7 +33,7 @@ jobs:
           name: Aubade-artifacts
           retention-days: 7
           path: |
-            aubade-core/build/libs/*-all.jar
+            aubade-core/build/libs/Aubade-*.jar
             aubade-game-skyblock/build/libs/*.jar
 
   release:

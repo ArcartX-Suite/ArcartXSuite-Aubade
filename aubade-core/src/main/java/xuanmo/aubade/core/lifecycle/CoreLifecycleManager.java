@@ -83,6 +83,9 @@ public class CoreLifecycleManager {
     IslandGrid grid = new IslandGrid(coreConfig.getRaw().getInt("world.island-spacing", 200));
     this.islandManager = new IslandManagerImpl(core, grid, islandRepo);
     core.islandManager(islandManager);
+    if (core.getIslandSyncService() != null) {
+      islandManager.setIslandSyncService(core.getIslandSyncService());
+    }
 
     JdbcPlayerRepository playerRepo = new JdbcPlayerRepository(storageManager.getDataSource());
     this.playerManager = new PlayerManagerImpl(playerRepo);

@@ -1,3 +1,4 @@
+
 package xuanmo.aubade.core.config;
 
 import java.io.File;
@@ -30,6 +31,8 @@ public class CoreConfig {
   private String defaultGameMode = "skyblock";
   private int maxIslandsPerPlayer = 1;
   private boolean debug = false;
+  private boolean syncEnabled = false;
+  private String syncChannel = "aubade:island";
   private String globalSpawnWorld = "";
   private double globalSpawnX = 0.0;
   private double globalSpawnY = 0.0;
@@ -60,6 +63,10 @@ public class CoreConfig {
     this.defaultGameMode = yaml.getString("general.default-gamemode", "skyblock");
     this.maxIslandsPerPlayer = yaml.getInt("general.max-islands-per-player", 1);
     this.debug = yaml.getBoolean("general.debug", false);
+    this.syncEnabled = yaml.getBoolean("sync.enabled", false);
+    this.syncChannel = yaml.getString("sync.channel", "aubade:island");
+    yaml.set("sync.enabled", syncEnabled);
+    yaml.set("sync.channel", syncChannel);
     this.globalSpawnWorld = yaml.getString("world.spawn.world", "");
     this.globalSpawnX = yaml.getDouble("world.spawn.x", 0.0);
     this.globalSpawnY = yaml.getDouble("world.spawn.y", 0.0);
@@ -74,6 +81,10 @@ public class CoreConfig {
     } catch (IOException e) {
       logger.severe("[配置] 保存 config.yml 失败: " + e.getMessage());
     }
+  }
+
+  public YamlConfiguration getRaw() {
+    return yaml;
   }
 
   public StorageDescriptor getStorageDescriptor() {
@@ -97,6 +108,14 @@ public class CoreConfig {
 
   public boolean isDebug() {
     return debug;
+  }
+
+  public boolean isSyncEnabled() {
+    return syncEnabled;
+  }
+
+  public String getSyncChannel() {
+    return syncChannel;
   }
 
   public Location getGlobalSpawn() {
@@ -138,13 +157,5 @@ public class CoreConfig {
     yaml.set("world.spawn.z", globalSpawnZ);
     yaml.set("world.spawn.yaw", globalSpawnYaw);
     yaml.set("world.spawn.pitch", globalSpawnPitch);
-  }
-
-  public YamlConfiguration getRaw() {
-    return yaml;
-  }
-
-  public File getConfigFile() {
-    return configFile;
   }
 }
